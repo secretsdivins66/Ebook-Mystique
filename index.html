@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Arcanes Mystiques — Collection exclusive d'ebooks sur la magie, l'alchimie, les runes et la spiritualité. Transformez votre vie avec des connaissances ancestrales.">
+  <meta name="keywords" content="ebooks mystiques, magie, alchimie, runes, divination, cristaux, spiritualité, ésotérisme, rituel lunaire">
+  <meta name="author" content="Arcanes Mystiques">
+  <meta name="robots" content="index, follow">
+  <meta property="og:title" content="Arcanes Mystiques — Ebooks de Magie et Spiritualité">
+  <meta property="og:description" content="Découvrez notre collection exclusive d'ebooks mystiques pour votre éveil spirituel et votre transformation intérieure.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="fr_FR">
+  <link rel="canonical" href="https://arcanes-mystiques.fr/">
+  <title>Arcanes Mystiques — Ebooks de Magie et Spiritualité</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- ===== NAVIGATION ===== -->
+  <nav class="navbar" role="navigation" aria-label="Navigation principale">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo" aria-label="Accueil Arcanes Mystiques">
+        <span class="nav-logo-icon">☽</span>
+        Arcanes Mystiques
+      </a>
+
+      <ul class="nav-links" role="list">
+        <li><a href="index.html" class="active" aria-current="page">Accueil</a></li>
+        <li><a href="#ebooks">Ebooks</a></li>
+        <li><a href="#temoignages">Témoignages</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+
+      <a href="#ebooks" class="btn btn-primary btn-sm nav-cta">Explorer la collection</a>
+      <button class="hamburger" aria-label="Ouvrir le menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile overlay -->
+  <nav class="nav-overlay" aria-label="Menu mobile">
+    <button class="overlay-close" aria-label="Fermer le menu">✕</button>
+    <a href="index.html">Accueil</a>
+    <a href="#ebooks">Ebooks</a>
+    <a href="#temoignages">Témoignages</a>
+    <a href="#faq">FAQ</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+
+  <!-- ===== HERO ===== -->
+  <header class="hero" role="banner">
+    <canvas id="starCanvas" aria-hidden="true"></canvas>
+    <div class="hero-overlay" aria-hidden="true"></div>
+
+    <div class="hero-content">
+      <div class="hero-badge">✦ Collection ésotérique exclusive ✦</div>
+
+      <h1 class="hero-title">
+        Réveillez la<br>
+        <span>Magie Ancienne</span><br>
+        en Vous
+      </h1>
+
+      <p class="hero-text">
+        Accédez à des connaissances millénaires soigneusement compilées — alchimie intérieure, runes ancestrales, divination et rituels sacrés pour transformer votre réalité.
+      </p>
+
+      <div class="hero-btns">
+        <a href="#ebooks" class="btn btn-primary">✦ Découvrir les Ebooks</a>
+        <a href="#faq" class="btn btn-secondary">En savoir plus</a>
+      </div>
+
+      <div class="hero-stats" aria-label="Statistiques">
+        <div class="stat">
+          <div class="stat-number counter" data-target="4850" data-suffix="+">0</div>
+          <div class="stat-label">Lecteurs éveillés</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">6</div>
+          <div class="stat-label">Ebooks exclusifs</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number counter" data-target="98" data-suffix="%">0</div>
+          <div class="stat-label">Satisfaction</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-scroll" aria-hidden="true">
+      <span>Défiler</span>
+      <div class="scroll-arrow"></div>
+    </div>
+  </header>
+
+  <!-- ===== FEATURES ===== -->
+  <section class="features section" aria-label="Nos engagements">
+    <div class="container">
+      <div class="features-grid">
+        <article class="feature-card reveal">
+          <span class="feature-icon" aria-hidden="true">📜</span>
+          <h3>Connaissances Authentiques</h3>
+          <p>Chaque ebook est issu de recherches approfondies sur des sources ancestrales et traditions mystiques.</p>
+        </article>
+        <article class="feature-card reveal">
+          <span class="feature-icon" aria-hidden="true">⚡</span>
+          <h3>Téléchargement Instantané</h3>
+          <p>Accès immédiat à votre achat. Téléchargez en format PDF et commencez votre voyage dès maintenant.</p>
+        </article>
+        <article class="feature-card reveal">
+          <span class="feature-icon" aria-hidden="true">🔒</span>
+          <h3>Paiement Sécurisé</h3>
+          <p>Transactions chiffrées SSL, paiement par carte ou PayPal. Votre sécurité est notre priorité.</p>
+        </article>
+        <article class="feature-card reveal">
+          <span class="feature-icon" aria-hidden="true">🔄</span>
+          <h3>Satisfait ou Remboursé</h3>
+          <p>Garantie de remboursement 30 jours si vous n'êtes pas pleinement satisfait de votre acquisition.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== EBOOKS ===== -->
+  <section class="ebooks-section section" id="ebooks" aria-labelledby="ebooks-title">
+    <div class="container">
+      <div class="section-divider" aria-hidden="true">
+        <span></span><i>✦</i><span></span>
+      </div>
+      <h2 class="section-title" id="ebooks-title">Notre Collection Mystique</h2>
+      <p class="section-subtitle">Six grimoires numériques pour explorer les arts ésotériques et éveiller votre potentiel caché</p>
+
+      <div class="ebooks-grid">
+
+        <!-- Ebook 1 -->
+        <article class="ebook-card reveal" data-title="Les Secrets de l'Alchimie Intérieure">
+          <div class="ebook-cover cover-1">
+            <span class="ebook-badge">Bestseller</span>
+            <div class="cover-symbol" aria-hidden="true">⚗️</div>
+            <div class="cover-title">Les Secrets de l'Alchimie Intérieure</div>
+          </div>
+          <div class="ebook-body">
+            <p class="ebook-category">Alchimie & Transformation</p>
+            <h3 class="ebook-title">Les Secrets de l'Alchimie Intérieure</h3>
+            <p class="ebook-desc">Transformez votre être profond grâce aux principes alchimiques millénaires. Découvrez comment transmuter vos émotions et accéder à votre or intérieur.</p>
+            <div class="ebook-meta">
+              <span>📄 187 pages</span>
+              <span>⏱ 6h de lecture</span>
+              <span>📥 Format PDF</span>
+            </div>
+            <div class="ebook-footer">
+              <div class="ebook-price">
+                <span class="price-current">19,99 €</span>
+                <span class="price-old">34,99 €</span>
+              </div>
+              <div>
+                <div class="stars" aria-label="4,9 étoiles sur 5">★★★★★</div>
+                <a href="ebooks/alchimie-interieure.html" class="btn btn-primary btn-sm btn-buy" style="margin-top:0.5rem">🛒 Acheter</a>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Ebook 2 -->
+        <article class="ebook-card reveal" data-title="Magie des Runes Ancestrales">
+          <div class="ebook-cover cover-2">
+            <div class="cover-symbol" aria-hidden="true">ᚱ</div>
+            <div class="cover-title">Magie des Runes Ancestrales</div>
+          </div>
+          <div class="ebook-body">
+            <p class="ebook-category">Runes & Divination</p>
+            <h3 class="ebook-title">Magie des Runes Ancestrales</h3>
+            <p class="ebook-desc">Guide complet des 24 runes Elder Futhark. Apprenez à les lire, les invoquer et créer des bindrunes puissants pour protéger et manifester.</p>
+            <div class="ebook-meta">
+              <span>📄 214 pages</span>
+              <span>⏱ 7h de lecture</span>
+              <span>📥 Format PDF</span>
+            </div>
+            <div class="ebook-footer">
+              <div class="ebook-price">
+                <span class="price-current">24,99 €</span>
+                <span class="price-old">39,99 €</span>
+              </div>
+              <div>
+                <div class="stars" aria-label="4,8 étoiles sur 5">★★★★★</div>
+                <a href="ebooks/runes-ancestrales.html" class="btn btn-primary btn-sm btn-buy" style="margin-top:0.5rem">🛒 Acheter</a>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Ebook 3 -->
+        <article class="ebook-card reveal" data-title="Divination par les Cristaux">
+          <div class="ebook-cover cover-3">
+            <span class="ebook-badge">Nouveau</span>
+            <div class="cover-symbol" aria-hidden="true">💎</div>
+            <div class="cover-title">Divination par les Cristaux</div>
+          </div>
+          <div class="ebook-body">
+            <p class="ebook-category">Cristaux & Lithothérapie</p>
+            <h3 class="ebook-title">Divination par les Cristaux</h3>
+            <p class="ebook-desc">Maîtrisez l'art de la lecture par les cristaux et la lithothérapie. 50 pierres détaillées, leurs vibrations et leurs usages dans la pratique magique.</p>
+            <div class="ebook-meta">
+              <span>📄 162 pages</span>
+              <span>⏱ 5h de lecture</span>
+              <span>📥 Format PDF</span>
+            </div>
+            <div class="ebook-footer">
+              <div class="ebook-price">
+                <span class="price-current">17,99 €</span>
+                <span class="price-old">29,99 €</span>
+              </div>
+              <div>
+                <div class="stars" aria-label="4,7 étoiles sur 5">★★★★☆</div>
+                <a href="ebooks/cristaux.html" class="btn btn-primary btn-sm btn-buy" style="margin-top:0.5rem">🛒 Acheter</a>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Ebook 4 -->
+        <article class="ebook-card reveal" data-title="Rituels Lunaires et Cycles Cosmiques">
+          <div class="ebook-cover cover-4">
+            <div class="cover-symbol" aria-hidden="true">🌙</div>
+            <div class="cover-title">Rituels Lunaires et Cycles Cosmiques</div>
+          </div>
+          <div class="ebook-body">
+            <p class="ebook-category">Lune & Rituels</p>
+            <h3 class="ebook-title">Rituels Lunaires et Cycles Cosmiques</h3>
+            <p class="ebook-desc">Harmonisez votre vie avec les 8 phases lunaires. Rituels de nouvelle lune, pleine lune, et comment utiliser l'énergie cosmique pour manifester vos désirs.</p>
+            <div class="ebook-meta">
+              <span>📄 198 pages</span>
+              <span>⏱ 6,5h de lecture</span>
+              <span>📥 Format PDF</span>
+            </div>
+            <div class="ebook-footer">
+              <div class="ebook-price">
+                <span class="price-current">21,99 €</span>
+                <span class="price-old">35,99 €</span>
+              </div>
+              <div>
+                <div class="stars" aria-label="4,9 étoiles sur 5">★★★★★</div>
+                <a href="ebooks/rituels-lunaires.html" class="btn btn-primary btn-sm btn-buy" style="margin-top:0.5rem">🛒 Acheter</a>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Ebook 5 -->
+        <article class="ebook-card reveal" data-title="Le Grimoire des Herbes Sacrées">
+          <div class="ebook-cover cover-5">
+            <div class="cover-symbol" aria-hidden="true">🌿</div>
+            <div class="cover-title">Le Grimoire des Herbes Sacrées</div>
+          </div>
+          <div class="ebook-body">
+            <p class="ebook-category">Herbologie & Magie naturelle</p>
+            <h3 class="ebook-title">Le Grimoire des Herbes Sacrées</h3>
+            <p class="ebook-desc">80 herbes et plantes sacrées, leurs propriétés magiques et médicinales. Recettes d'encens, infusions rituelles et sachets de protection ancestraux.</p>
+            <div class="ebook-meta">
+              <span>📄 240 pages</span>
+              <span>⏱ 8h de lecture</span>
+              <span>📥 Format PDF</span>
+            </div>
+            <div class="ebook-footer">
+              <div class="ebook-price">
+                <span class="price-current">22,99 €</span>
+                <span class="price-old">38,99 €</span>
+              </div>
+              <div>
+                <div class="stars" aria-label="4,8 étoiles sur 5">★★★★★</div>
+                <a href="ebooks/herbes-sacrees.html" class="btn btn-primary btn-sm btn-buy" style="margin-top:0.5rem">🛒 Acheter</a>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Ebook 6 -->
+        <article class="ebook-card reveal" data-title="Voyage Astral : Manuel du Voyageur">
+          <div class="ebook-cover cover-6">
+            <div class="cover-symbol" aria-hidden="true">🌌</div>
+            <div class="cover-title">Voyage Astral : Manuel du Voyageur</div>
+          </div>
+          <div class="ebook-body">
+            <p class="ebook-category">Projection Astrale & Conscience</p>
+            <h3 class="ebook-title">Voyage Astral : Manuel du Voyageur</h3>
+            <p class="ebook-desc">Guide pratique et progressif de la projection astrale. Techniques de relaxation profonde, de sortie corporelle et de navigation dans les plans subtils.</p>
+            <div class="ebook-meta">
+              <span>📄 176 pages</span>
+              <span>⏱ 5,5h de lecture</span>
+              <span>📥 Format PDF</span>
+            </div>
+            <div class="ebook-footer">
+              <div class="ebook-price">
+                <span class="price-current">26,99 €</span>
+                <span class="price-old">44,99 €</span>
+              </div>
+              <div>
+                <div class="stars" aria-label="4,9 étoiles sur 5">★★★★★</div>
+                <a href="ebooks/voyage-astral.html" class="btn btn-primary btn-sm btn-buy" style="margin-top:0.5rem">🛒 Acheter</a>
+              </div>
+            </div>
+          </div>
+        </article>
+
+      </div><!-- /.ebooks-grid -->
+    </div>
+  </section>
+
+  <!-- ===== TESTIMONIALS ===== -->
+  <section class="testimonials section" id="temoignages" aria-labelledby="testi-title">
+    <div class="container">
+      <div class="section-divider" aria-hidden="true">
+        <span></span><i>✦</i><span></span>
+      </div>
+      <h2 class="section-title" id="testi-title">Ce que disent nos lecteurs</h2>
+      <p class="section-subtitle">Des milliers de personnes ont déjà transformé leur vie grâce à nos ebooks</p>
+
+      <div class="testimonials-wrapper" role="region" aria-label="Témoignages">
+        <div class="testimonials-track">
+
+          <div class="testimonial-card">
+            <div class="testimonial-inner">
+              <div class="quote-icon" aria-hidden="true">"</div>
+              <p class="testimonial-text">
+                "L'ebook sur l'alchimie intérieure a littéralement changé ma façon de voir les difficultés de la vie. J'ai appris à transmuter mes peurs en sagesse. Chaque chapitre est une révélation. Je le relis régulièrement et je découvre toujours quelque chose de nouveau."
+              </p>
+              <div class="testimonial-author">
+                <div class="author-avatar" aria-hidden="true">SC</div>
+                <div>
+                  <div class="author-name">Sophie C.</div>
+                  <div class="author-title">Praticienne en développement personnel — Lyon</div>
+                  <div class="stars" aria-label="5 étoiles">★★★★★</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="testimonial-inner">
+              <div class="quote-icon" aria-hidden="true">"</div>
+              <p class="testimonial-text">
+                "Je cherchais depuis des années un guide sérieux sur les runes. Le grimoire des Runes Ancestrales dépasse toutes mes attentes : complet, précis, bien structuré. Grâce à lui, je réalise maintenant mes propres tirages et j'ai créé mon premier bindrune de protection."
+              </p>
+              <div class="testimonial-author">
+                <div class="author-avatar" aria-hidden="true">MR</div>
+                <div>
+                  <div class="author-name">Marc R.</div>
+                  <div class="author-title">Passionné de traditions nordiques — Strasbourg</div>
+                  <div class="stars" aria-label="5 étoiles">★★★★★</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="testimonial-inner">
+              <div class="quote-icon" aria-hidden="true">"</div>
+              <p class="testimonial-text">
+                "Les Rituels Lunaires ont transformé mon rapport au temps et à la nature. Je suis maintenant les phases de la lune et j'organise mes projets en conséquence. Mes manifestations sont devenues incroyablement précises. Un guide indispensable pour tout pratiquant spirituel."
+              </p>
+              <div class="testimonial-author">
+                <div class="author-avatar" aria-hidden="true">AL</div>
+                <div>
+                  <div class="author-name">Amélie L.</div>
+                  <div class="author-title">Herboriste et praticienne Wicca — Bordeaux</div>
+                  <div class="stars" aria-label="5 étoiles">★★★★★</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="testimonial-inner">
+              <div class="quote-icon" aria-hidden="true">"</div>
+              <p class="testimonial-text">
+                "Le Voyage Astral m'a permis d'atteindre ma première projection en seulement 3 semaines de pratique. Les techniques sont expliquées avec une clarté exceptionnelle et la progression pédagogique est parfaite pour les débutants comme pour les avancés."
+              </p>
+              <div class="testimonial-author">
+                <div class="author-avatar" aria-hidden="true">TD</div>
+                <div>
+                  <div class="author-name">Thomas D.</div>
+                  <div class="author-title">Méditant et explorateur du conscient — Paris</div>
+                  <div class="stars" aria-label="5 étoiles">★★★★★</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /.testimonials-track -->
+      </div>
+
+      <div class="testimonials-controls" aria-label="Contrôles du carousel">
+        <button class="testi-btn testi-prev" aria-label="Témoignage précédent">&#8592;</button>
+        <div class="testi-dots" role="tablist">
+          <button class="testi-dot active" aria-label="Témoignage 1" role="tab"></button>
+          <button class="testi-dot" aria-label="Témoignage 2" role="tab"></button>
+          <button class="testi-dot" aria-label="Témoignage 3" role="tab"></button>
+          <button class="testi-dot" aria-label="Témoignage 4" role="tab"></button>
+        </div>
+        <button class="testi-btn testi-next" aria-label="Témoignage suivant">&#8594;</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FAQ ===== -->
+  <section class="faq-section section" id="faq" aria-labelledby="faq-title">
+    <div class="container">
+      <div class="section-divider" aria-hidden="true">
+        <span></span><i>✦</i><span></span>
+      </div>
+      <h2 class="section-title" id="faq-title">Questions Fréquentes</h2>
+      <p class="section-subtitle">Tout ce que vous devez savoir avant de commencer votre voyage</p>
+
+      <div class="faq-list" role="list">
+
+        <div class="faq-item" role="listitem">
+          <div class="faq-question" role="button" tabindex="0" aria-expanded="false">
+            <span>Dans quels formats sont disponibles les ebooks ?</span>
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Tous nos ebooks sont disponibles en format PDF haute résolution, compatible avec tous vos appareils : ordinateur, tablette et smartphone. Vous recevez également un accès à une version ePub pour les liseuses Kindle, Kobo et autres.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item" role="listitem">
+          <div class="faq-question" role="button" tabindex="0" aria-expanded="false">
+            <span>Comment se passe le téléchargement après l'achat ?</span>
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Dès votre paiement confirmé, vous recevrez immédiatement un email contenant vos liens de téléchargement sécurisés. Ces liens restent actifs pendant 30 jours et vous pouvez télécharger vos fichiers jusqu'à 5 fois. Aucune attente, accès instantané garanti.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item" role="listitem">
+          <div class="faq-question" role="button" tabindex="0" aria-expanded="false">
+            <span>Quelle est la politique de remboursement ?</span>
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Nous offrons une garantie satisfait ou remboursé de 30 jours sans condition. Si pour quelque raison que ce soit vous n'êtes pas entièrement satisfait de votre achat, contactez notre service client et nous procéderons au remboursement intégral dans les 5 jours ouvrés.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item" role="listitem">
+          <div class="faq-question" role="button" tabindex="0" aria-expanded="false">
+            <span>Faut-il avoir des connaissances préalables en ésotérisme ?</span>
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Non, absolument pas. Nos ebooks sont conçus pour tous les niveaux, des débutants complets aux praticiens avancés. Chaque ouvrage commence par les fondamentaux et progresse graduellement vers des concepts plus profonds. Un glossaire complet est inclus dans chaque ebook.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item" role="listitem">
+          <div class="faq-question" role="button" tabindex="0" aria-expanded="false">
+            <span>Puis-je offrir un ebook en cadeau ?</span>
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Oui ! Lors de votre achat, sélectionnez l'option "Offrir en cadeau" et renseignez l'adresse email du bénéficiaire ainsi qu'un message personnalisé. Votre proche recevra un email élégant avec ses liens de téléchargement à l'heure que vous choisissez.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item" role="listitem">
+          <div class="faq-question" role="button" tabindex="0" aria-expanded="false">
+            <span>Y a-t-il des mises à jour disponibles après l'achat ?</span>
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Oui ! Tous nos ebooks font l'objet de mises à jour régulières avec de nouveaux contenus, exercices et corrections. En tant qu'acheteur, vous recevrez automatiquement toutes les mises à jour gratuitement par email, à vie.
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== NEWSLETTER ===== -->
+  <section class="newsletter" aria-labelledby="newsletter-title">
+    <div class="container">
+      <div class="section-divider" aria-hidden="true">
+        <span></span><i>✦</i><span></span>
+      </div>
+      <h2 class="section-title" id="newsletter-title">Rejoignez le Cercle Mystique</h2>
+      <p class="section-subtitle">Recevez des extraits exclusifs, des rituels gratuits et les premières nouvelles de nos prochaines parutions</p>
+      <form class="newsletter-form" role="form" aria-label="Inscription à la newsletter">
+        <label for="newsletter-email" class="sr-only">Votre adresse email</label>
+        <input type="email" id="newsletter-email" name="email" placeholder="Votre adresse email" required autocomplete="email">
+        <button type="submit" class="btn btn-primary">✦ S'abonner</button>
+      </form>
+      <p style="font-size:0.78rem;color:var(--text-muted);margin-top:1rem;">Pas de spam. Désabonnement en un clic. Vos données restent privées.</p>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="nav-logo" style="font-size:1.3rem">
+            <span class="nav-logo-icon">☽</span>
+            Arcanes Mystiques
+          </a>
+          <p>Votre portail vers les connaissances ésotériques et les traditions mystiques du monde. Chaque ebook est une clé vers une compréhension plus profonde de vous-même et de l'univers.</p>
+          <div class="footer-socials" aria-label="Réseaux sociaux">
+            <a href="#" class="social-btn" aria-label="Instagram">📸</a>
+            <a href="#" class="social-btn" aria-label="Facebook">📘</a>
+            <a href="#" class="social-btn" aria-label="Pinterest">📌</a>
+            <a href="#" class="social-btn" aria-label="YouTube">▶️</a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>Collection</h4>
+          <ul role="list">
+            <li><a href="ebooks/alchimie-interieure.html">Alchimie Intérieure</a></li>
+            <li><a href="ebooks/runes-ancestrales.html">Runes Ancestrales</a></li>
+            <li><a href="ebooks/cristaux.html">Divination Cristaux</a></li>
+            <li><a href="ebooks/rituels-lunaires.html">Rituels Lunaires</a></li>
+            <li><a href="ebooks/herbes-sacrees.html">Herbes Sacrées</a></li>
+            <li><a href="ebooks/voyage-astral.html">Voyage Astral</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul role="list">
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="#temoignages">Témoignages</a></li>
+            <li><a href="#faq">FAQ</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Informations</h4>
+          <ul role="list">
+            <li><a href="#">Mentions légales</a></li>
+            <li><a href="#">Politique de confidentialité</a></li>
+            <li><a href="#">Conditions générales</a></li>
+            <li><a href="#">Programme d'affiliation</a></li>
+            <li><a href="#">Politique de remboursement</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© 2026 Arcanes Mystiques. Tous droits réservés.</span>
+        <span>Fait avec ✦ et sagesse ancestrale</span>
+        <span><a href="#">Mentions légales</a> · <a href="#">Confidentialité</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
