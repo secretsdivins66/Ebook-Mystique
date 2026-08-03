@@ -12,13 +12,13 @@
 
   --gold:            #c6a15f;
   --gold-light:      #e3c489;
-  --gold-deep:       #8a6b34;
+  --gold-deep:       #9d793b;
 
   --wine-light:      #a5486a;
 
   --text-primary:    #efe8db;
   --text-secondary:  #ad9fc4;
-  --text-muted:      #675f7c;
+  --text-muted:      #837a99;
 
   --line:            rgba(198,161,95,0.16);
   --line-strong:     rgba(198,161,95,0.42);
@@ -75,6 +75,49 @@ ul { list-style: none; }
 ::-webkit-scrollbar-thumb { background: var(--gold-deep); }
 ::-webkit-scrollbar-thumb:hover { background: var(--gold); }
 ::selection { background: var(--gold-deep); color: var(--bg-primary); }
+
+/* ---------- Accessibility utilities ---------- */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 1rem;
+  z-index: 10000;
+  background: var(--gold);
+  color: var(--bg-primary);
+  padding: 0.8rem 1.4rem;
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  border-radius: var(--radius);
+  transition: top var(--transition);
+}
+
+.skip-link:focus {
+  top: 1rem;
+}
+
+:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+
+.faq-question:focus-visible,
+.tab-btn:focus-visible {
+  outline-offset: -2px;
+}
 
 /* ---------- Typography ---------- */
 h1,h2,h3,h4 {
@@ -356,6 +399,25 @@ h1,h2,h3,h4 {
   z-index: 2;
   padding: 1rem;
   max-width: 780px;
+}
+
+.hero-badge,
+.hero-title,
+.hero-text,
+.hero-btns,
+.hero-stats {
+  animation: heroRise 0.9s var(--ease) both;
+}
+
+.hero-badge { animation-delay: 0.05s; }
+.hero-title { animation-delay: 0.15s; }
+.hero-text  { animation-delay: 0.25s; }
+.hero-btns  { animation-delay: 0.35s; }
+.hero-stats { animation-delay: 0.45s; }
+
+@keyframes heroRise {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 .hero-badge {
@@ -1639,5 +1701,10 @@ h1,h2,h3,h4 {
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .reveal, .scroll-arrow, .btn::before, .navbar { transition: none !important; animation: none !important; }
+  .reveal, .scroll-arrow, .btn::before, .navbar,
+  .hero-badge, .hero-title, .hero-text, .hero-btns, .hero-stats {
+    transition: none !important;
+    animation: none !important;
+  }
+  .reveal { opacity: 1; transform: none; }
 }

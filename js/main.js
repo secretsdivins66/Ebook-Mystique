@@ -14,7 +14,7 @@ if (typeof supabase !== 'undefined') {
   } catch (e) {
     console.error('[Supabase] Erreur createClient:', e);
   }
-} else {
+} else if (document.querySelector('.newsletter-form, .contact-form')) {
   console.error('[Supabase] SDK non chargé — vérifiez le CDN');
 }
 
