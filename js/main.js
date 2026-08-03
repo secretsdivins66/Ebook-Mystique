@@ -10,12 +10,12 @@ let db = null;
 if (typeof supabase !== 'undefined') {
   try {
     db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-    console.log('[Supabase] ✅ Client initialisé');
+    console.log('[Supabase] Client initialisé');
   } catch (e) {
-    console.error('[Supabase] ❌ Erreur createClient:', e);
+    console.error('[Supabase] Erreur createClient:', e);
   }
 } else {
-  console.error('[Supabase] ❌ SDK non chargé — vérifiez le CDN');
+  console.error('[Supabase] SDK non chargé — vérifiez le CDN');
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -206,14 +206,14 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   /* ---------- Toast notification ---------- */
-  function showToast(msg, icon = '✨') {
+  function showToast(msg) {
     let toast = document.querySelector('.toast');
     if (!toast) {
       toast = document.createElement('div');
       toast.className = 'toast';
       document.body.appendChild(toast);
     }
-    toast.innerHTML = `<span class="toast-icon">${icon}</span><span>${msg}</span>`;
+    toast.textContent = msg;
     toast.classList.add('show');
     clearTimeout(toast._t);
     toast._t = setTimeout(() => toast.classList.remove('show'), 3800);
@@ -221,15 +221,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* ---------- Buy / Cart buttons ---------- */
   document.querySelectorAll('button.btn-buy').forEach(btn => {
+    const originalLabel = btn.textContent;
     btn.addEventListener('click', e => {
       e.preventDefault();
       const title = btn.closest('[data-title]')?.dataset.title || 'cet ebook';
-      showToast(`"${title}" ajouté au panier !`, '🛒');
-      btn.textContent = '✓ Ajouté au panier';
-      btn.style.background = 'linear-gradient(135deg,#2a6e2a,#3a8e3a)';
+      showToast(`"${title}" ajouté au panier`);
+      btn.textContent = 'Ajouté au panier';
+      btn.classList.add('is-added');
       setTimeout(() => {
-        btn.innerHTML = '🛒 Acheter maintenant';
-        btn.style.background = '';
+        btn.textContent = originalLabel;
+        btn.classList.remove('is-added');
       }, 2800);
     });
   });
@@ -244,7 +245,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const email = input.value.trim().toLowerCase();
       const originalHtml = btn.innerHTML;
-      btn.innerHTML = '⏳ Envoi...';
+      btn.innerHTML = 'Envoi...';
       btn.disabled = true;
 
       if (db) {
@@ -253,7 +254,7 @@ document.addEventListener('DOMContentLoaded', () => {
           .insert({ email, source: 'newsletter' });
 
         if (error) {
-          console.error('[Supabase] ❌ Newsletter insert error:', {
+          console.error('[Supabase] Newsletter insert error:', {
             message : error.message,
             code    : error.code,
             details : error.details,
@@ -261,17 +262,17 @@ document.addEventListener('DOMContentLoaded', () => {
             status  : error.status,
           });
           if (error.code === '23505') {
-            showToast('Vous êtes déjà abonné(e) à notre newsletter !', 'ℹ️');
+            showToast('Vous êtes déjà abonné(e) à notre newsletter');
           } else {
-            showToast(`Erreur [${error.code || error.status}] : ${error.message}`, '❌');
+            showToast(`Erreur [${error.code || error.status}] : ${error.message}`);
           }
         } else {
-          console.log('[Supabase] ✅ Subscriber saved:', data);
-          showToast('Merci ! Bienvenue dans le Cercle Mystique ✨', '📜');
+          console.log('[Supabase] Subscriber saved:', data);
+          showToast('Merci ! Bienvenue dans le Cercle Mystique');
           input.value = '';
         }
       } else {
-        showToast('Merci ! Vous êtes maintenant abonné(e).', '📜');
+        showToast('Merci ! Vous êtes maintenant abonné(e)');
         input.value = '';
       }
 
@@ -287,7 +288,7 @@ document.addEventListener('DOMContentLoaded', () => {
       e.preventDefault();
       const btn = contactForm.querySelector('button[type="submit"]');
       const originalHtml = btn.innerHTML;
-      btn.innerHTML = '⏳ Envoi en cours...';
+      btn.innerHTML = 'Envoi en cours...';
       btn.disabled = true;
 
       const payload = {
@@ -301,21 +302,21 @@ document.addEventListener('DOMContentLoaded', () => {
       if (db) {
         const { data, error } = await db.from('contacts').insert(payload);
         if (error) {
-          console.error('[Supabase] ❌ Contact insert error:', {
+          console.error('[Supabase] Contact insert error:', {
             message : error.message,
             code    : error.code,
             details : error.details,
             hint    : error.hint,
             status  : error.status,
           });
-          showToast(`Erreur [${error.code || error.status}] : ${error.message}`, '❌');
+          showToast(`Erreur [${error.code || error.status}] : ${error.message}`);
         } else {
-          console.log('[Supabase] ✅ Contact saved:', data);
-          showToast('Message envoyé ! Nous vous répondrons sous 48h.', '📬');
+          console.log('[Supabase] Contact saved:', data);
+          showToast('Message envoyé — nous vous répondrons sous 48h');
           contactForm.reset();
         }
       } else {
-        showToast('Message envoyé ! Nous vous répondrons sous 48h.', '📬');
+        showToast('Message envoyé — nous vous répondrons sous 48h');
         contactForm.reset();
       }
 

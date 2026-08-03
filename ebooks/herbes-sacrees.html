@@ -8,7 +8,7 @@
   <title>Le Grimoire des Herbes Sacrées — Arcanes Mystiques</title>
   <link rel="stylesheet" href="../css/style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Raleway:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -24,7 +24,7 @@
 
   <nav class="navbar">
     <div class="nav-container">
-      <a href="../index.html" class="nav-logo"><span class="nav-logo-icon">☽</span>Arcanes Mystiques</a>
+      <a href="../index.html" class="nav-logo">Arcanes Mystiques</a>
       <ul class="nav-links">
         <li><a href="../index.html">Accueil</a></li>
         <li><a href="../index.html#ebooks" class="active">Ebooks</a></li>
@@ -32,12 +32,12 @@
         <li><a href="../index.html#faq">FAQ</a></li>
         <li><a href="../contact.html">Contact</a></li>
       </ul>
-      <a href="../index.html#ebooks" class="btn btn-primary btn-sm nav-cta">Tous les ebooks</a>
+      <a href="../index.html#ebooks" class="btn btn-secondary btn-sm nav-cta">Tous les ebooks</a>
       <button class="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
     </div>
   </nav>
   <nav class="nav-overlay">
-    <button class="overlay-close">✕</button>
+    <button class="overlay-close">Fermer</button>
     <a href="../index.html">Accueil</a>
     <a href="../index.html#ebooks">Ebooks</a>
     <a href="../contact.html">Contact</a>
@@ -47,16 +47,16 @@
     <div class="container">
       <div class="ebook-detail-layout">
         <div class="ebook-detail-cover cover-5">
-          <div class="cover-symbol-lg">🌿</div>
+          <div class="book-mark-lg">H</div>
           <div class="cover-title-lg">Le Grimoire des Herbes Sacrées</div>
         </div>
         <div class="ebook-detail-info">
-          <p class="ebook-detail-category">🌿 Herbologie Magique &amp; Nature Sacrée</p>
+          <p class="ebook-detail-category">Herbologie Magique &amp; Nature Sacrée</p>
           <h1>Le Grimoire des Herbes Sacrées</h1>
           <div class="rating-row">
-            <span class="stars">★★★★★</span>
-            <span style="color:var(--gold);font-weight:600;font-size:0.95rem">4,8</span>
-            <span class="rating-count">(256 avis)</span>
+            <span class="rating-value">4,8</span><span class="rating-scale">/5</span>
+            <span class="rating-track"><span class="rating-fill" style="--rating:96%"></span></span>
+            <span class="rating-count">256 avis</span>
           </div>
           <p class="ebook-detail-desc">
             La nature est la plus ancienne et la plus puissante des pharmacies spirituelles. Ce grimoire révèle les secrets des 80 plantes et herbes que les sorcières, chamans et guérisseurs ont utilisé pendant des millénaires. Chaque espèce est présentée avec sa signature planétaire, ses correspondances élémentales, ses propriétés magiques et ses usages pratiques en rituels.
@@ -69,17 +69,17 @@
             <span class="tag">Infusions sacrées</span>
             <span class="tag">Signatures planétaires</span>
           </div>
-          <div class="buy-box">
+          <div class="buy-box" data-title="Le Grimoire des Herbes Sacrées">
             <div class="buy-price-row">
               <span class="buy-price-current">22,99 €</span>
               <span class="buy-price-old">38,99 €</span>
-              <span class="buy-save">-41 %</span>
+              <span class="buy-save">−41 %</span>
             </div>
             <div class="buy-btns">
-              <button class="btn btn-primary btn-buy" data-title="Le Grimoire des Herbes Sacrées">🛒 Acheter maintenant</button>
-              <a href="../index.html#ebooks" class="btn btn-secondary">↩ Voir tous les ebooks</a>
+              <button class="btn btn-primary btn-buy" data-title="Le Grimoire des Herbes Sacrées">Acheter maintenant</button>
+              <a href="../index.html#ebooks" class="btn btn-secondary">Voir tous les ebooks</a>
             </div>
-            <div class="buy-guarantees">
+            <div class="spec-list">
               <span>Téléchargement PDF immédiat</span>
               <span>240 pages · Le guide le plus complet</span>
               <span>Garanti satisfait ou remboursé 30 jours</span>
@@ -133,35 +133,30 @@
         </div>
       </div>
 
-      <div id="h-auteur" class="tab-panel" role="tabpanel">
-        <div style="display:flex;gap:2rem;align-items:flex-start;flex-wrap:wrap">
-          <div class="author-avatar" style="width:80px;height:80px;font-size:2rem;flex-shrink:0">PG</div>
-          <div>
-            <h3>Pierre Gaillard</h3>
-            <p style="color:var(--gold);font-size:0.85rem;margin-bottom:1rem">Herboriste traditionnel, botaniste et praticien chamanique</p>
-            <p>Pierre Gaillard est herboriste traditionnel depuis 30 ans et botaniste de formation. Il a voyagé dans 18 pays pour collecter les traditions herboristes locales auprès des guérisseurs indigènes, des druides et des chamans. Son exploitation en Ardèche est un laboratoire vivant des plantes médicinales et magiques.</p>
-            <br>
-            <p>Auteur de plusieurs ouvrages de référence sur les plantes médicinales, il est consulté par des chercheurs, des praticiens de santé et des praticiens ésotériques du monde entier. Ses formations en herbologie magique font l'objet d'une liste d'attente de plusieurs mois.</p>
-          </div>
-        </div>
+      <div id="h-auteur" class="tab-panel author-bio" role="tabpanel">
+        <h3>Pierre Gaillard</h3>
+        <p class="author-role">Herboriste traditionnel, botaniste et praticien chamanique</p>
+        <p>Pierre Gaillard est herboriste traditionnel depuis 30 ans et botaniste de formation. Il a voyagé dans 18 pays pour collecter les traditions herboristes locales auprès des guérisseurs indigènes, des druides et des chamans. Son exploitation en Ardèche est un laboratoire vivant des plantes médicinales et magiques.</p>
+        <br>
+        <p>Auteur de plusieurs ouvrages de référence sur les plantes médicinales, il est consulté par des chercheurs, des praticiens de santé et des praticiens ésotériques du monde entier. Ses formations en herbologie magique font l'objet d'une liste d'attente de plusieurs mois.</p>
       </div>
 
       <div id="h-avis" class="tab-panel" role="tabpanel">
         <h3>Avis vérifiés</h3>
-        <div style="display:flex;flex-direction:column;gap:1.5rem;margin-top:1rem">
-          <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem">
-            <div style="display:flex;justify-content:space-between;margin-bottom:0.8rem">
-              <strong style="color:var(--gold)">Valérie M.</strong>
-              <span class="stars">★★★★★</span>
+        <div>
+          <div class="review-block">
+            <div class="review-head">
+              <strong>Valérie M.</strong>
+              <span class="review-rating">5/5</span>
             </div>
-            <p style="color:var(--text-secondary);font-size:0.9rem">"Le grimoire le plus complet que j'aie jamais eu. Les fiches plantes sont exhaustives et les recettes d'encens fonctionnent vraiment. Mon sauge de purification n'a jamais été aussi efficace !"</p>
+            <p>« Le grimoire le plus complet que j'aie jamais eu. Les fiches plantes sont exhaustives et les recettes d'encens fonctionnent vraiment. Mon sauge de purification n'a jamais été aussi efficace ! »</p>
           </div>
-          <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem">
-            <div style="display:flex;justify-content:space-between;margin-bottom:0.8rem">
-              <strong style="color:var(--gold)">Antoine R.</strong>
-              <span class="stars">★★★★★</span>
+          <div class="review-block">
+            <div class="review-head">
+              <strong>Antoine R.</strong>
+              <span class="review-rating">5/5</span>
             </div>
-            <p style="color:var(--text-secondary);font-size:0.9rem">"Herboriste amateur depuis 10 ans, ce livre m'a ouvert tout un nouveau pan de connaissance sur la dimension magique des plantes. La section sur les signatures planétaires est révolutionnaire."</p>
+            <p>« Herboriste amateur depuis 10 ans, ce livre m'a ouvert tout un nouveau pan de connaissance sur la dimension magique des plantes. La section sur les signatures planétaires est révolutionnaire. »</p>
           </div>
         </div>
       </div>
@@ -171,21 +166,21 @@
   <section class="related-ebooks">
     <div class="container">
       <h2 class="section-title">Vous pourriez aussi aimer</h2>
-      <div class="ebooks-grid" style="grid-template-columns:repeat(auto-fill,minmax(260px,1fr))">
-        <article class="ebook-card reveal">
-          <div class="ebook-cover cover-4"><div class="cover-symbol">🌙</div><div class="cover-title">Rituels Lunaires</div></div>
+      <div class="ebooks-grid" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr))">
+        <article class="ebook-card reveal" data-title="Rituels Lunaires et Cycles Cosmiques">
+          <div class="ebook-cover cover-4"><div class="book-mark">L</div><div class="cover-title">Rituels Lunaires</div></div>
           <div class="ebook-body"><p class="ebook-category">Lune</p><h3 class="ebook-title">Rituels Lunaires et Cycles Cosmiques</h3>
-          <div class="ebook-footer"><div class="ebook-price"><span class="price-current">21,99 €</span></div><a href="rituels-lunaires.html" class="btn btn-primary btn-sm">Voir</a></div></div>
+          <div class="ebook-footer"><div class="ebook-price"><span class="price-current">21,99 €</span></div><a href="rituels-lunaires.html" class="btn btn-secondary btn-sm">Voir</a></div></div>
         </article>
-        <article class="ebook-card reveal">
-          <div class="ebook-cover cover-1"><div class="cover-symbol">⚗️</div><div class="cover-title">Alchimie Intérieure</div></div>
+        <article class="ebook-card reveal" data-title="Les Secrets de l'Alchimie Intérieure">
+          <div class="ebook-cover cover-1"><div class="book-mark">A</div><div class="cover-title">Alchimie Intérieure</div></div>
           <div class="ebook-body"><p class="ebook-category">Alchimie</p><h3 class="ebook-title">Les Secrets de l'Alchimie Intérieure</h3>
-          <div class="ebook-footer"><div class="ebook-price"><span class="price-current">19,99 €</span></div><a href="alchimie-interieure.html" class="btn btn-primary btn-sm">Voir</a></div></div>
+          <div class="ebook-footer"><div class="ebook-price"><span class="price-current">19,99 €</span></div><a href="alchimie-interieure.html" class="btn btn-secondary btn-sm">Voir</a></div></div>
         </article>
-        <article class="ebook-card reveal">
-          <div class="ebook-cover cover-6"><div class="cover-symbol">🌌</div><div class="cover-title">Voyage Astral</div></div>
+        <article class="ebook-card reveal" data-title="Voyage Astral : Manuel du Voyageur">
+          <div class="ebook-cover cover-6"><div class="book-mark">V</div><div class="cover-title">Voyage Astral</div></div>
           <div class="ebook-body"><p class="ebook-category">Projection Astrale</p><h3 class="ebook-title">Voyage Astral : Manuel du Voyageur</h3>
-          <div class="ebook-footer"><div class="ebook-price"><span class="price-current">26,99 €</span></div><a href="voyage-astral.html" class="btn btn-primary btn-sm">Voir</a></div></div>
+          <div class="ebook-footer"><div class="ebook-price"><span class="price-current">26,99 €</span></div><a href="voyage-astral.html" class="btn btn-secondary btn-sm">Voir</a></div></div>
         </article>
       </div>
     </div>
@@ -194,7 +189,7 @@
   <footer class="footer">
     <div class="container">
       <div class="footer-bottom" style="border:none;padding-top:0">
-        <a href="../index.html" class="nav-logo" style="font-size:1.1rem"><span class="nav-logo-icon">☽</span>Arcanes Mystiques</a>
+        <a href="../index.html" class="nav-logo" style="font-size:1rem">Arcanes Mystiques</a>
         <span style="color:var(--text-muted);font-size:0.82rem">© 2026 Arcanes Mystiques. Tous droits réservés.</span>
         <span style="font-size:0.82rem"><a href="#">Mentions légales</a> · <a href="#">Confidentialité</a></span>
       </div>
