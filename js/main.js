@@ -220,7 +220,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* ---------- Buy / Cart buttons ---------- */
-  document.querySelectorAll('.btn-buy').forEach(btn => {
+  document.querySelectorAll('button.btn-buy').forEach(btn => {
     btn.addEventListener('click', e => {
       e.preventDefault();
       const title = btn.closest('[data-title]')?.dataset.title || 'cet ebook';
