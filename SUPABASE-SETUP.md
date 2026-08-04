@@ -2,7 +2,7 @@
 
 L'administration du site (connexion, gestion des produits, stockage des images
 et des PDF) repose sur ton projet Supabase déjà connecté au site
-(`kaujtphylrcautstokzw.supabase.co`). Ces trois étapes se font entièrement
+(`cawyrfbmwpcoanftybew.supabase.co`). Ces trois étapes se font entièrement
 depuis le tableau de bord Supabase — aucune clé sensible n'a besoin d'être
 partagée avec qui que ce soit.
 

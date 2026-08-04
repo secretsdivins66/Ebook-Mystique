@@ -6,8 +6,8 @@
    Security côté base de données, pas par le secret de cette clé.
    ============================================================ */
 
-const SUPABASE_URL = 'https://kaujtphylrcautstokzw.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImthdWp0cGh5bHJjYXV0c3Rva3p3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA2MDM3MjUsImV4cCI6MjA5NjE3OTcyNX0.Aa9MxgVA2f5wAC2T0ameQx4OleNrQox3UcWw8E_v6Ew';
+const SUPABASE_URL = 'https://cawyrfbmwpcoanftybew.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNhd3lyZmJtd3Bjb2FuZnR5YmV3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA5MjQxNDcsImV4cCI6MjA5NjUwMDE0N30.sMq_LhdpFpKTMCVXgIkDV-w5Zw8jBUktedj31b2q2dE';
 
 window.sb = null;
 if (typeof supabase !== 'undefined') {
