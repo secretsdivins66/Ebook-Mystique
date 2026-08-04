@@ -342,7 +342,11 @@ els.form.addEventListener('submit', async e => {
     setTimeout(() => { window.location.href = 'index.html'; }, 900);
   } catch (err) {
     console.error('[Admin] Save error:', err);
-    adminToast('Erreur : ' + (err.message || 'échec de l\'enregistrement.'), true);
+    const isNetworkError = err instanceof TypeError && /fetch/i.test(err.message || '');
+    const message = isNetworkError
+      ? 'Connexion au serveur impossible. Vérifie ta connexion internet, puis rafraîchis complètement la page (Ctrl/Cmd+Shift+R) avant de réessayer.'
+      : 'Erreur : ' + (err.message || 'échec de l\'enregistrement.');
+    adminToast(message, true);
     els.submitBtn.disabled = false;
     els.submitBtn.textContent = originalLabel;
   }
