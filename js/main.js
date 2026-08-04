@@ -2,21 +2,10 @@
    ARCANES MYSTIQUES — JavaScript principal
    ============================================================ */
 
-/* ---------- Supabase Client ---------- */
-const SUPABASE_URL = 'https://kaujtphylrcautstokzw.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImthdWp0cGh5bHJjYXV0c3Rva3p3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA2MDM3MjUsImV4cCI6MjA5NjE3OTcyNX0.Aa9MxgVA2f5wAC2T0ameQx4OleNrQox3UcWw8E_v6Ew';
-
-let db = null;
-if (typeof supabase !== 'undefined') {
-  try {
-    db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-    console.log('[Supabase] Client initialisé');
-  } catch (e) {
-    console.error('[Supabase] Erreur createClient:', e);
-  }
-} else if (document.querySelector('.newsletter-form, .contact-form')) {
-  console.error('[Supabase] SDK non chargé — vérifiez le CDN');
-}
+/* ---------- Supabase Client ----------
+   Le client est initialisé par js/supabase-client.js (chargé avant ce
+   fichier) et exposé sur window.sb. */
+const db = window.sb || null;
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -177,33 +166,21 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* ---------- Scroll Reveal ---------- */
-  const revealEls = document.querySelectorAll('.reveal');
-  if (revealEls.length) {
-    const observer = new IntersectionObserver(
-      entries => {
-        entries.forEach((e, i) => {
-          if (e.isIntersecting) {
-            setTimeout(() => e.target.classList.add('visible'), i * 80);
-            observer.unobserve(e.target);
-          }
-        });
-      },
-      { threshold: 0.12 }
-    );
-    revealEls.forEach(el => observer.observe(el));
+  const revealObserver = new IntersectionObserver(
+    entries => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('visible'), i * 80);
+          revealObserver.unobserve(e.target);
+        }
+      });
+    },
+    { threshold: 0.12 }
+  );
+  function observeReveal(root = document) {
+    root.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
   }
-
-  /* ---------- Tabs (ebook detail) ---------- */
-  document.querySelectorAll('.tab-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const target = btn.dataset.tab;
-      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-      btn.classList.add('active');
-      const panel = document.getElementById(target);
-      if (panel) panel.classList.add('active');
-    });
-  });
+  observeReveal();
 
   /* ---------- Toast notification ---------- */
   function showToast(msg) {
@@ -325,26 +302,61 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  /* ---------- Animated counters ---------- */
-  const counters = document.querySelectorAll('.counter');
-  if (counters.length) {
-    const cObserver = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (!entry.isIntersecting) return;
-        const el  = entry.target;
-        const end = parseInt(el.dataset.target, 10);
-        const dur = 2000;
-        const step = end / (dur / 16);
-        let val = 0;
-        const timer = setInterval(() => {
-          val += step;
-          if (val >= end) { val = end; clearInterval(timer); }
-          el.textContent = Math.floor(val).toLocaleString('fr-FR') + (el.dataset.suffix || '');
-        }, 16);
-        cObserver.unobserve(el);
-      });
-    }, { threshold: 0.5 });
-    counters.forEach(c => cObserver.observe(c));
+  /* ---------- Storefront: produits publiés depuis Supabase ---------- */
+  function escapeHtml(str) {
+    return String(str == null ? '' : str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  function formatPrice(n) {
+    return Number(n).toFixed(2).replace('.', ',') + ' €';
+  }
+
+  function renderProductCard(p, toneIndex) {
+    const thumb = p.thumbnail_url
+      ? `<img src="${escapeHtml(p.thumbnail_url)}" alt="${escapeHtml(p.title)}" loading="lazy" width="600" height="600">`
+      : `<div class="product-fallback"><span class="book-mark" aria-hidden="true">${escapeHtml((p.title || '?').charAt(0).toUpperCase())}</span></div>`;
+    const priceBlock = p.promo_price
+      ? `<span class="price-current">${formatPrice(p.promo_price)}</span><span class="price-old">${formatPrice(p.price)}</span>`
+      : `<span class="price-current">${formatPrice(p.price)}</span>`;
+    return `
+        <article class="ebook-card reveal" data-title="${escapeHtml(p.title)}">
+          <div class="ebook-cover cover-tone-${toneIndex}">${thumb}</div>
+          <div class="ebook-body">
+            <p class="ebook-category">${escapeHtml(p.category)}</p>
+            <h3 class="ebook-title">${escapeHtml(p.title)}</h3>
+            <p class="ebook-desc">${escapeHtml(p.short_description)}</p>
+            <div class="ebook-footer">
+              <div class="ebook-price">${priceBlock}</div>
+              <a href="ebooks/${escapeHtml(p.slug)}" class="btn btn-secondary btn-sm">Découvrir</a>
+            </div>
+          </div>
+        </article>`;
+  }
+
+  const productsContainer = document.getElementById('products-container');
+  if (productsContainer && db) {
+    (async () => {
+      const { data, error } = await db
+        .from('products')
+        .select('slug, title, short_description, category, price, promo_price, thumbnail_url')
+        .eq('status', 'published')
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        console.error('[Supabase] Products fetch error:', error);
+        return;
+      }
+      if (!data || data.length === 0) return;
+
+      productsContainer.innerHTML = `<div class="ebooks-grid">${
+        data.map((p, i) => renderProductCard(p, (i % 4) + 1)).join('')
+      }</div>`;
+      observeReveal(productsContainer);
+    })();
   }
 
 });

@@ -1,0 +1,9 @@
+{
+  "name": "arcanes-mystiques",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Site + administration Arcanes Mystiques (fonctions serverless Vercel)",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.45.0"
+  }
+}

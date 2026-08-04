@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title id="page-title">Ajouter un produit — Administration Arcanes Mystiques</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="admin.css">
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Raleway:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+</head>
+<body class="admin-body">
+
+  <header class="admin-topbar">
+    <div class="nav-logo">Arcanes Mystiques</div>
+    <div class="admin-topbar-actions">
+      <a href="index.html" class="btn btn-secondary btn-sm">← Tableau de bord</a>
+      <button type="button" class="btn btn-secondary btn-sm" id="logout-btn">Déconnexion</button>
+    </div>
+  </header>
+
+  <main class="admin-main">
+    <div class="admin-header">
+      <div>
+        <h1 id="form-heading">Ajouter un produit</h1>
+        <p>Les champs marqués * sont obligatoires.</p>
+      </div>
+    </div>
+
+    <form id="product-form" novalidate>
+      <div class="admin-form-grid">
+        <!-- ---------- Colonne principale ---------- -->
+        <div>
+          <div class="admin-form-card">
+            <h2>Informations générales</h2>
+
+            <div class="admin-field-row">
+              <div class="form-group">
+                <label for="f-title">Titre *</label>
+                <input type="text" id="f-title" required>
+              </div>
+            </div>
+
+            <div class="admin-field-row" style="margin-top:1.2rem">
+              <div class="form-group">
+                <label for="f-slug">Identifiant URL (slug) *</label>
+                <input type="text" id="f-slug" required pattern="[a-z0-9\-]+">
+                <p class="admin-field-help">Utilisé dans l'adresse : /ebooks/<span id="slug-preview">…</span></p>
+                <p class="admin-field-error" id="slug-error">Ce format n'est pas valide ou ce slug est déjà utilisé.</p>
+              </div>
+            </div>
+
+            <div class="admin-field-row two-col" style="margin-top:1.2rem">
+              <div class="form-group">
+                <label for="f-category">Catégorie *</label>
+                <select id="f-category" required>
+                  <option value="">Choisir…</option>
+                  <option>Alchimie &amp; Transformation</option>
+                  <option>Runes &amp; Divination</option>
+                  <option>Cristaux &amp; Lithothérapie</option>
+                  <option>Lune &amp; Rituels</option>
+                  <option>Herbologie &amp; Magie naturelle</option>
+                  <option>Projection Astrale &amp; Conscience</option>
+                  <option>Tarot &amp; Oracles</option>
+                  <option>Astrologie</option>
+                  <option value="__other__">Autre…</option>
+                </select>
+                <input type="text" id="f-category-other" placeholder="Nom de la catégorie" style="display:none;margin-top:0.6rem">
+              </div>
+              <div class="form-group">
+                <label for="f-status">Statut</label>
+                <div class="admin-status-toggle" style="position:relative">
+                  <input type="radio" name="status" id="f-status-draft" value="draft" checked>
+                  <label for="f-status-draft">Brouillon</label>
+                  <input type="radio" name="status" id="f-status-published" value="published">
+                  <label for="f-status-published">Publié</label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="admin-form-card">
+            <h2>Descriptions</h2>
+            <div class="form-group">
+              <label for="f-short-desc">Description courte *</label>
+              <textarea id="f-short-desc" required style="min-height:80px"></textarea>
+              <p class="admin-field-help">Affichée sur la carte produit et en haut de la fiche.</p>
+            </div>
+            <div class="form-group" style="margin-top:1.2rem">
+              <label for="f-full-desc">Description complète *</label>
+              <textarea id="f-full-desc" required style="min-height:200px"></textarea>
+              <p class="admin-field-help">Sépare les paragraphes par une ligne vide.</p>
+            </div>
+          </div>
+
+          <div class="admin-form-card">
+            <h2>Tarif</h2>
+            <div class="admin-field-row two-col">
+              <div class="form-group">
+                <label for="f-price">Prix normal (€) *</label>
+                <input type="number" id="f-price" required min="0" step="0.01">
+              </div>
+              <div class="form-group">
+                <label for="f-promo-price">Prix promotionnel (€)</label>
+                <input type="number" id="f-promo-price" min="0" step="0.01">
+                <p class="admin-field-help">Laisser vide si aucune promotion.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="admin-form-card">
+            <h2>Référencement (SEO)</h2>
+            <div class="form-group">
+              <label for="f-seo-title">Titre SEO</label>
+              <input type="text" id="f-seo-title" placeholder="Par défaut : titre du produit">
+            </div>
+            <div class="form-group" style="margin-top:1.2rem">
+              <label for="f-seo-desc">Meta description</label>
+              <textarea id="f-seo-desc" style="min-height:70px" placeholder="150-160 caractères, par défaut : description courte"></textarea>
+            </div>
+            <div class="form-group" style="margin-top:1.2rem">
+              <label for="f-seo-keywords">Mots-clés</label>
+              <input type="text" id="f-seo-keywords" placeholder="mot-clé 1, mot-clé 2">
+            </div>
+          </div>
+        </div>
+
+        <!-- ---------- Colonne fichiers ---------- -->
+        <div>
+          <div class="admin-form-card">
+            <h2>Vignette *</h2>
+            <p class="admin-field-help" style="margin-top:-0.8rem;margin-bottom:1rem">Minimum 600 × 600 px. Affichée dans la liste des produits.</p>
+            <label class="file-drop">
+              <input type="file" id="f-thumbnail" accept="image/*">
+              <span class="file-drop-label">Choisir une image</span>
+            </label>
+            <p class="admin-field-error" id="thumbnail-error"></p>
+            <div class="file-preview" id="thumbnail-preview"></div>
+          </div>
+
+          <div class="admin-form-card">
+            <h2>Bannière *</h2>
+            <p class="admin-field-help" style="margin-top:-0.8rem;margin-bottom:1rem">Minimum 702 × 260 px. Affichée en haut de la fiche produit.</p>
+            <label class="file-drop">
+              <input type="file" id="f-banner" accept="image/*">
+              <span class="file-drop-label">Choisir une image</span>
+            </label>
+            <p class="admin-field-error" id="banner-error"></p>
+            <div class="file-preview" id="banner-preview"></div>
+          </div>
+
+          <div class="admin-form-card">
+            <h2>Galerie</h2>
+            <p class="admin-field-help" style="margin-top:-0.8rem;margin-bottom:1rem">Plusieurs images possibles.</p>
+            <label class="file-drop">
+              <input type="file" id="f-gallery" accept="image/*" multiple>
+              <span class="file-drop-label">Ajouter des images</span>
+            </label>
+            <div class="file-preview" id="gallery-preview"></div>
+          </div>
+
+          <div class="admin-form-card">
+            <h2>Fichier PDF de l'ebook</h2>
+            <label class="file-drop">
+              <input type="file" id="f-pdf" accept="application/pdf">
+              <span class="file-drop-label">Choisir un fichier PDF</span>
+            </label>
+            <p class="admin-field-error" id="pdf-error"></p>
+            <div id="pdf-preview"></div>
+          </div>
+
+          <div class="admin-form-actions" style="flex-direction:column">
+            <button type="submit" class="btn btn-primary" id="submit-btn" style="width:100%;justify-content:center">
+              Enregistrer le produit
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="../js/supabase-client.js"></script>
+  <script src="admin.js"></script>
+  <script src="product-form.js"></script>
+</body>
+</html>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Tableau de bord — Administration Arcanes Mystiques</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="admin.css">
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Raleway:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+</head>
+<body class="admin-body">
+
+  <header class="admin-topbar">
+    <div class="nav-logo">Arcanes Mystiques</div>
+    <div class="admin-topbar-actions">
+      <a href="../index.html" class="btn btn-secondary btn-sm" target="_blank" rel="noopener">Voir le site</a>
+      <button type="button" class="btn btn-secondary btn-sm" id="logout-btn">Déconnexion</button>
+    </div>
+  </header>
+
+  <main class="admin-main">
+    <div class="admin-header">
+      <div>
+        <h1>Produits</h1>
+        <p id="product-count-label">Chargement…</p>
+      </div>
+      <a href="product-form.html" class="btn btn-primary btn-sm">+ Ajouter un produit</a>
+    </div>
+
+    <div class="admin-table-wrap">
+      <table class="admin-table" id="product-table" style="display:none">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Titre</th>
+            <th>Catégorie</th>
+            <th>Prix</th>
+            <th>Statut</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="product-table-body"></tbody>
+      </table>
+      <div class="admin-empty" id="product-empty">Chargement des produits…</div>
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="../js/supabase-client.js"></script>
+  <script src="admin.js"></script>
+  <script>
+    (async () => {
+      await AdminAuth.require();
+      await loadProducts();
+    })();
+
+    document.getElementById('logout-btn').addEventListener('click', () => AdminAuth.logout());
+
+    function formatPrice(n) {
+      return Number(n).toFixed(2).replace('.', ',') + ' €';
+    }
+
+    async function loadProducts() {
+      const table = document.getElementById('product-table');
+      const tbody = document.getElementById('product-table-body');
+      const empty = document.getElementById('product-empty');
+      const countLabel = document.getElementById('product-count-label');
+
+      const { data, error } = await window.sb
+        .from('products')
+        .select('id, slug, title, category, price, promo_price, thumbnail_url, status')
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        empty.textContent = 'Erreur de chargement : ' + error.message;
+        countLabel.textContent = '';
+        return;
+      }
+
+      if (!data || data.length === 0) {
+        table.style.display = 'none';
+        empty.textContent = 'Aucun produit pour le moment. Clique sur « Ajouter un produit » pour commencer.';
+        countLabel.textContent = '0 produit';
+        return;
+      }
+
+      const published = data.filter(p => p.status === 'published').length;
+      countLabel.textContent = `${data.length} produit${data.length > 1 ? 's' : ''} · ${published} publié${published > 1 ? 's' : ''}`;
+
+      empty.style.display = 'none';
+      table.style.display = 'table';
+
+      tbody.innerHTML = data.map(p => `
+        <tr data-id="${p.id}">
+          <td>${
+            p.thumbnail_url
+              ? `<img class="admin-thumb" src="${adminEscapeHtml(p.thumbnail_url)}" alt="">`
+              : `<div class="admin-thumb-fallback">${adminEscapeHtml((p.title || '?').charAt(0).toUpperCase())}</div>`
+          }</td>
+          <td class="admin-product-title" data-label="Titre">${adminEscapeHtml(p.title)}</td>
+          <td data-label="Catégorie">${adminEscapeHtml(p.category || '—')}</td>
+          <td data-label="Prix">${p.promo_price ? `${formatPrice(p.promo_price)} <span style="text-decoration:line-through;color:var(--text-muted)">${formatPrice(p.price)}</span>` : formatPrice(p.price)}</td>
+          <td data-label="Statut">
+            <button type="button" class="status-badge${p.status === 'published' ? ' is-published' : ''}" data-action="toggle-status" data-status="${p.status}">
+              ${p.status === 'published' ? 'Publié' : 'Brouillon'}
+            </button>
+          </td>
+          <td data-label="Actions">
+            <div class="admin-row-actions">
+              <a href="product-form.html?id=${p.id}" class="admin-link-btn">Modifier</a>
+              <button type="button" class="admin-link-btn danger" data-action="delete">Supprimer</button>
+            </div>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    document.getElementById('product-table-body').addEventListener('click', async e => {
+      const row = e.target.closest('tr[data-id]');
+      if (!row) return;
+      const id = row.dataset.id;
+
+      if (e.target.dataset.action === 'toggle-status') {
+        const newStatus = e.target.dataset.status === 'published' ? 'draft' : 'published';
+        e.target.disabled = true;
+        const { error } = await window.sb.from('products').update({ status: newStatus }).eq('id', id);
+        if (error) {
+          adminToast('Erreur : ' + error.message, true);
+          e.target.disabled = false;
+          return;
+        }
+        adminToast(newStatus === 'published' ? 'Produit publié' : 'Produit repassé en brouillon');
+        await loadProducts();
+      }
+
+      if (e.target.dataset.action === 'delete') {
+        const title = row.querySelector('.admin-product-title')?.textContent || 'ce produit';
+        if (!confirm(`Supprimer définitivement « ${title} » ? Cette action est irréversible.`)) return;
+
+        const { data: product } = await window.sb.from('products').select('*').eq('id', id).single();
+
+        const { error } = await window.sb.from('products').delete().eq('id', id);
+        if (error) {
+          adminToast('Erreur lors de la suppression : ' + error.message, true);
+          return;
+        }
+
+        // Nettoyage des fichiers associés (best-effort, ne bloque pas si ça échoue)
+        if (product) {
+          const imagePaths = [];
+          const toPath = (url, bucket) => {
+            if (!url) return null;
+            const marker = `/object/public/${bucket}/`;
+            const idx = url.indexOf(marker);
+            return idx === -1 ? null : url.slice(idx + marker.length);
+          };
+          [product.thumbnail_url, product.banner_url, ...(product.gallery || [])].forEach(url => {
+            const p = toPath(url, 'product-images');
+            if (p) imagePaths.push(p);
+          });
+          if (imagePaths.length) await window.sb.storage.from('product-images').remove(imagePaths);
+          if (product.pdf_path) await window.sb.storage.from('product-files').remove([product.pdf_path]);
+        }
+
+        adminToast('Produit supprimé');
+        await loadProducts();
+      }
+    });
+  </script>
+</body>
+</html>
