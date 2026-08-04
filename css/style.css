@@ -114,8 +114,7 @@ ul { list-style: none; }
   outline-offset: 3px;
 }
 
-.faq-question:focus-visible,
-.tab-btn:focus-visible {
+.faq-question:focus-visible {
   outline-offset: -2px;
 }
 
@@ -404,8 +403,7 @@ h1,h2,h3,h4 {
 .hero-badge,
 .hero-title,
 .hero-text,
-.hero-btns,
-.hero-stats {
+.hero-btns {
   animation: heroRise 0.9s var(--ease) both;
 }
 
@@ -413,7 +411,6 @@ h1,h2,h3,h4 {
 .hero-title { animation-delay: 0.15s; }
 .hero-text  { animation-delay: 0.25s; }
 .hero-btns  { animation-delay: 0.35s; }
-.hero-stats { animation-delay: 0.45s; }
 
 @keyframes heroRise {
   from { opacity: 0; transform: translateY(16px); }
@@ -457,43 +454,6 @@ h1,h2,h3,h4 {
 }
 
 .hero-btns .btn { justify-content: center; }
-
-.hero-stats {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-  justify-content: center;
-  margin-top: 4.5rem;
-}
-
-.stat { text-align: center; position: relative; padding: 0 1rem; }
-
-.stat + .stat::before {
-  content: '';
-  position: absolute;
-  left: -1rem;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 1px;
-  height: 24px;
-  background: var(--line);
-}
-
-.stat-number {
-  font-family: var(--font-display);
-  font-size: 1.4rem;
-  font-weight: 600;
-  color: var(--gold-light);
-}
-
-.stat-label {
-  font-size: 0.68rem;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  margin-top: 0.3rem;
-}
 
 .hero-scroll {
   display: none;
@@ -583,7 +543,7 @@ h1,h2,h3,h4 {
 .ebook-card:hover { background: var(--bg-secondary); }
 
 .ebook-cover {
-  height: 220px;
+  aspect-ratio: 1 / 1;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -594,14 +554,22 @@ h1,h2,h3,h4 {
   overflow: hidden;
 }
 
-.ebook-cover::before {
+.ebook-cover img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ebook-cover:not(:has(img))::before {
   content: '';
   position: absolute;
   inset: 0;
   background: radial-gradient(ellipse at 50% 30%, rgba(255,255,255,0.05) 0%, transparent 65%);
 }
 
-.ebook-cover::after {
+.ebook-cover:not(:has(img))::after {
   content: '';
   position: absolute;
   inset: 14px;
@@ -609,12 +577,10 @@ h1,h2,h3,h4 {
   pointer-events: none;
 }
 
-.cover-1 { background: linear-gradient(160deg, #150b28 0%, #1d1338 100%); }
-.cover-2 { background: linear-gradient(160deg, #0c1626 0%, #142338 100%); }
-.cover-3 { background: linear-gradient(160deg, #12101f 0%, #1a1830 100%); }
-.cover-4 { background: linear-gradient(160deg, #1a0d28 0%, #241333 100%); }
-.cover-5 { background: linear-gradient(160deg, #0c1c17 0%, #132922 100%); }
-.cover-6 { background: linear-gradient(160deg, #1c0f10 0%, #2a1616 100%); }
+.cover-tone-1 { background: linear-gradient(160deg, #150b28 0%, #1d1338 100%); }
+.cover-tone-2 { background: linear-gradient(160deg, #0c1626 0%, #142338 100%); }
+.cover-tone-3 { background: linear-gradient(160deg, #12101f 0%, #1a1830 100%); }
+.cover-tone-4 { background: linear-gradient(160deg, #1a0d28 0%, #241333 100%); }
 
 .book-mark {
   position: relative;
@@ -641,19 +607,6 @@ h1,h2,h3,h4 {
   color: var(--text-primary);
   line-height: 1.4;
   letter-spacing: 0.01em;
-}
-
-.ebook-badge {
-  position: absolute;
-  top: 1rem; right: 1rem;
-  border: 1px solid var(--line-strong);
-  color: var(--gold-light);
-  font-size: 0.62rem;
-  font-weight: 600;
-  padding: 0.3rem 0.7rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  z-index: 1;
 }
 
 .ebook-body {
@@ -684,18 +637,6 @@ h1,h2,h3,h4 {
   color: var(--text-secondary);
   flex: 1;
   margin-bottom: 1.3rem;
-}
-
-.ebook-meta {
-  font-size: 0.76rem;
-  color: var(--text-muted);
-  margin-bottom: 1.3rem;
-  letter-spacing: 0.02em;
-}
-
-.ebook-meta span:not(:last-child)::after {
-  content: '\00a0\00b7\00a0';
-  color: var(--line-strong);
 }
 
 .ebook-footer {
@@ -732,43 +673,28 @@ h1,h2,h3,h4 {
   text-decoration: line-through;
 }
 
-/* ---------- Rating (typographic) ---------- */
-.rating {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
+/* ---------- Empty state ---------- */
+.empty-state {
+  max-width: 560px;
+  margin: 0 auto;
+  text-align: center;
+  padding: var(--space-lg) 2rem;
+  border: 1px solid var(--line);
 }
 
-.rating-value {
+.empty-state-title {
   font-family: var(--font-display);
-  font-size: 0.9rem;
+  font-size: 1.15rem;
+  font-weight: 500;
   color: var(--gold-light);
-  font-weight: 600;
+  margin-bottom: 0.8rem;
 }
 
-.rating-scale {
-  font-size: 0.72rem;
-  color: var(--text-muted);
-  margin-left: -0.35rem;
-}
-
-.rating-track {
-  width: 46px;
-  height: 2px;
-  background: var(--line);
-  position: relative;
-}
-
-.rating-fill {
-  position: absolute;
-  inset: 0;
-  background: var(--gold);
-  width: var(--rating, 100%);
-}
-
-.rating-count {
-  font-size: 0.72rem;
-  color: var(--text-muted);
+.empty-state-text {
+  color: var(--text-secondary);
+  font-size: 0.92rem;
+  font-weight: 300;
+  line-height: 1.75;
 }
 
 /* ---------- Testimonials ---------- */
@@ -1203,48 +1129,60 @@ h1,h2,h3,h4 {
 .form-group select option { background: var(--bg-tertiary); }
 .form-group textarea { resize: vertical; min-height: 130px; }
 
-/* ---------- Ebook Detail Page ---------- */
+/* ---------- Product Detail Page ---------- */
 .ebook-detail-hero {
   padding: calc(var(--nav-height) + 2rem) 0 var(--space-md);
   background: var(--bg-secondary);
   border-bottom: 1px solid var(--line);
 }
 
-.ebook-detail-layout {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 2rem;
-  align-items: start;
+.product-banner-frame {
+  position: relative;
+  aspect-ratio: 702 / 260;
+  border: 1px solid var(--line);
+  overflow: hidden;
+  margin-bottom: 2rem;
 }
 
-.ebook-detail-cover {
-  height: 220px;
-  max-width: 320px;
-  margin-inline: auto;
-  margin-bottom: 1rem;
+.product-banner-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.product-fallback {
+  width: 100%;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-direction: column;
-  text-align: center;
-  padding: 1.5rem;
   position: relative;
   overflow: hidden;
+  background: linear-gradient(160deg, #150b28 0%, #1d1338 100%);
 }
 
-.ebook-detail-cover::before {
+.product-fallback::before {
   content: '';
   position: absolute;
   inset: 0;
   background: radial-gradient(ellipse at 50% 25%, rgba(255,255,255,0.05) 0%, transparent 65%);
 }
 
-.ebook-detail-cover::after {
+.product-fallback::after {
   content: '';
   position: absolute;
-  inset: 16px;
-  border: 1px solid rgba(198,161,95,0.3);
+  inset: 14px;
+  border: 1px solid rgba(198,161,95,0.28);
   pointer-events: none;
+}
+
+.product-fallback .book-mark-lg { margin-bottom: 0; }
+
+.product-hero-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  align-items: start;
 }
 
 .ebook-detail-info h1 {
@@ -1262,37 +1200,10 @@ h1,h2,h3,h4 {
   margin-bottom: 1.2rem;
 }
 
-.rating-row {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.8rem;
-  margin-bottom: 1.8rem;
-}
-
 .ebook-detail-desc {
   color: var(--text-secondary);
   font-weight: 300;
   line-height: 1.85;
-  margin-bottom: 2.2rem;
-}
-
-.ebook-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem 0;
-  margin-bottom: 2.4rem;
-}
-
-.tag {
-  color: var(--text-secondary);
-  font-size: 0.76rem;
-  font-weight: 300;
-}
-
-.tag:not(:last-child)::after {
-  content: '\00a0/\00a0';
-  color: var(--line-strong);
 }
 
 .buy-box {
@@ -1335,167 +1246,59 @@ h1,h2,h3,h4 {
 .buy-btns { display: flex; flex-direction: column; gap: 0.9rem; }
 .buy-btns .btn { justify-content: center; }
 
-.spec-list {
-  margin-top: 1.6rem;
-  display: flex;
-  flex-direction: column;
+.download-btn[disabled] {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
 }
 
-.spec-list span {
-  display: block;
-  font-size: 0.8rem;
-  font-weight: 300;
-  color: var(--text-secondary);
-  padding: 0.65rem 0;
-  border-top: 1px solid var(--line);
-}
-
-.ebook-detail-tabs { padding: var(--space-md) 0; }
-
-.tabs-nav {
-  display: flex;
-  gap: 1.4rem;
-  border-bottom: 1px solid var(--line);
-  margin-bottom: 2rem;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-}
-
-.tab-btn {
-  background: none;
-  border: none;
+.download-note {
+  font-size: 0.74rem;
   color: var(--text-muted);
-  font-family: var(--font-body);
-  font-size: 0.68rem;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  padding: 0.7rem 0.1rem 1rem;
-  cursor: pointer;
-  transition: color var(--transition), border-color var(--transition);
-  white-space: nowrap;
-  border-bottom: 1px solid transparent;
-  margin-bottom: -1px;
+  text-align: center;
+  margin-top: -0.3rem;
 }
 
-.tab-btn:hover  { color: var(--text-primary); }
-.tab-btn.active { color: var(--gold); border-bottom-color: var(--gold); }
+.product-description-section { padding: var(--space-md) 0; }
 
-.tab-panel { display: none; }
-.tab-panel.active { display: block; }
-
-.tab-panel h3 {
-  font-size: 1.05rem;
-  font-weight: 500;
-  color: var(--gold-light);
-  margin-bottom: 1.1rem;
-}
-
-.tab-panel p, .tab-panel li {
-  color: var(--text-secondary);
-  font-weight: 300;
-  font-size: 0.95rem;
-  line-height: 1.85;
-}
-
-.tab-panel ul {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 0.7rem;
-}
-
-.tab-panel ul li {
-  padding-left: 1.3rem;
-  position: relative;
-}
-
-.tab-panel ul li::before {
-  content: '\2014';
-  color: var(--gold);
-  position: absolute;
-  left: 0;
-  font-size: 0.85rem;
-}
-
-.toc-list { display: flex; flex-direction: column; gap: 0; }
-
-.toc-item {
-  display: flex;
-  align-items: center;
-  gap: 1.4rem;
-  padding: 1rem 0;
-  border-bottom: 1px solid var(--line);
-  color: var(--text-secondary);
-  font-weight: 300;
-  font-size: 0.92rem;
-}
-
-.toc-item:last-child { border: none; }
-
-.toc-num {
-  font-family: var(--font-display);
-  font-size: 0.85rem;
-  color: var(--gold);
-  flex-shrink: 0;
-  width: 2rem;
-}
-
-.author-bio h3 {
-  font-size: 1.15rem;
-  font-weight: 500;
-  color: var(--gold-light);
-  margin-bottom: 0.3rem;
-}
-
-.author-role {
-  font-size: 0.82rem;
-  font-style: italic;
-  color: var(--gold-deep);
-  margin-bottom: 1.3rem;
-}
-
-.author-bio p {
+.product-full-description p {
   color: var(--text-secondary);
   font-weight: 300;
   line-height: 1.85;
+  margin-bottom: 1.2rem;
 }
 
-.review-block {
-  padding: 1.6rem 0;
+.product-full-description p:last-child { margin-bottom: 0; }
+
+.product-gallery-section {
+  background: var(--bg-secondary);
   border-top: 1px solid var(--line);
+  padding: var(--space-md) 0;
 }
 
-.review-block:first-child { border-top: none; padding-top: 0; }
-
-.review-head {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  justify-content: space-between;
-  margin-bottom: 0.7rem;
-  gap: 0.5rem 1rem;
+.product-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  margin-top: 2rem;
 }
 
-.review-head strong {
-  font-family: var(--font-display);
-  font-weight: 600;
-  color: var(--gold-light);
-  font-size: 0.92rem;
+.product-gallery-item {
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background: var(--bg-primary);
 }
 
-.review-rating {
-  font-size: 0.78rem;
-  color: var(--text-muted);
-  flex-shrink: 0;
+.product-gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s var(--ease);
 }
 
-.review-block p {
-  color: var(--text-secondary);
-  font-weight: 300;
-  font-size: 0.9rem;
-  line-height: 1.8;
-}
+.product-gallery-item:hover img { transform: scale(1.04); }
 
 .related-ebooks { background: var(--bg-secondary); padding: var(--space-xl) 0; border-top: 1px solid var(--line); }
 
@@ -1589,9 +1392,6 @@ h1,h2,h3,h4 {
 /* ----- ≥361px : grands petits téléphones ----- */
 @media (min-width: 361px) {
   .hero-title { font-size: clamp(2.3rem, 5.6vw, 4rem); }
-  .hero-stats { flex-direction: row; flex-wrap: wrap; }
-  .stat + .stat::before { display: block; }
-  .stat-number { font-size: 1.5rem; }
   .nav-logo { font-size: 1.02rem; }
   .section-title { font-size: clamp(1.7rem, 3.4vw, 2.5rem); }
 }
@@ -1607,10 +1407,6 @@ h1,h2,h3,h4 {
 
   .hero-content { padding: 1.5rem 1rem; }
   .hero-btns { flex-direction: row; flex-wrap: wrap; }
-  .hero-stats { gap: 1.4rem; }
-  .stat { padding: 0 1.4rem; }
-  .stat + .stat::before { left: -1.4rem; height: 32px; }
-  .stat-number { font-size: 1.9rem; }
   .hero-scroll { display: flex; }
   .hero-text { padding: 0 0.5rem; }
 
@@ -1632,11 +1428,9 @@ h1,h2,h3,h4 {
   .buy-price-current { font-size: 2.2rem; }
   .buy-price-row { flex-wrap: nowrap; gap: 1rem; }
 
-  .ebook-detail-cover { height: 280px; }
   .book-mark-lg { font-size: 5.4rem; }
-  .ebook-detail-tabs { padding: var(--space-xl) 0; }
-  .tabs-nav { gap: 2.2rem; }
-  .tab-btn { font-size: 0.74rem; }
+
+  .product-gallery { grid-template-columns: repeat(3, 1fr); }
 
   .newsletter { padding: var(--space-xl) 0; }
 }
@@ -1667,8 +1461,7 @@ h1,h2,h3,h4 {
   .newsletter-form input { flex: 1 1 200px; width: auto; border-bottom: none; }
   .newsletter-form .btn { width: auto; border: none; padding: 0.9rem 0.4rem; }
 
-  .ebook-detail-layout { grid-template-columns: 260px 1fr; gap: 2.8rem; }
-  .ebook-detail-cover { height: 340px; max-width: none; margin-inline: 0; margin-bottom: 0; }
+  .product-hero-grid { grid-template-columns: 1fr 320px; gap: 3rem; }
 
   .form-grid { grid-template-columns: 1fr 1fr; gap: 1.6rem; }
 
@@ -1687,6 +1480,7 @@ h1,h2,h3,h4 {
   .hamburger { display: none; }
 
   .footer-grid { grid-template-columns: 2fr 1fr 1fr 1.5fr; }
+  .footer-grid--compact { grid-template-columns: 2fr 1fr 1.5fr; }
   .footer-bottom { flex-direction: row; text-align: left; }
 
   .features-grid { grid-template-columns: repeat(4, 1fr); gap: 0; }
@@ -1695,14 +1489,14 @@ h1,h2,h3,h4 {
 
   .contact-grid { grid-template-columns: 1fr 1.6fr; gap: 4rem; }
 
-  .ebook-detail-layout { grid-template-columns: 320px 1fr; gap: 4.5rem; }
-  .ebook-detail-cover { height: 400px; }
+  .product-hero-grid { grid-template-columns: 1fr 340px; gap: 4rem; }
+  .product-gallery { grid-template-columns: repeat(4, 1fr); }
 }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .reveal, .scroll-arrow, .btn::before, .navbar,
-  .hero-badge, .hero-title, .hero-text, .hero-btns, .hero-stats {
+  .hero-badge, .hero-title, .hero-text, .hero-btns {
     transition: none !important;
     animation: none !important;
   }
