@@ -79,3 +79,32 @@ function adminFileExt(filename) {
   const m = /\.([a-zA-Z0-9]+)$/.exec(filename || '');
   return m ? m[1].toLowerCase() : 'jpg';
 }
+
+/* Nettoie le nom d'un fichier pour en faire une clé de stockage Supabase
+   valide : décompose puis retire les accents, passe en minuscules, ne
+   garde que [a-z0-9-_], conserve l'extension. Supabase Storage rejette
+   les clés contenant espaces, accents, "&", parenthèses, apostrophes,
+   etc. — cette fonction élimine ces caractères avant tout envoi. */
+function adminSanitizeFilename(filename) {
+  const raw = String(filename || '');
+  const ext = adminFileExt(raw);
+  const dot = raw.lastIndexOf('.');
+  const base = dot > 0 ? raw.slice(0, dot) : raw;
+  const safeBase = base
+    .normalize('NFD')
+    .replace(/[̀-ͯ]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9_]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .slice(0, 60) || 'fichier';
+  return `${safeBase}.${ext}`;
+}
+
+/* Construit une clé de stockage sûre et unique pour un fichier téléversé,
+   utilisée pour toutes les images (vignette, bannière, galerie) et pour
+   le PDF, afin que tous les envois passent par le même système sécurisé. */
+function adminBuildUploadPath(slug, prefix, originalFilename) {
+  const safeSlug = adminSlugify(slug) || 'produit';
+  const rand = Math.random().toString(36).slice(2, 8);
+  return `${safeSlug}/${prefix}-${Date.now()}-${rand}-${adminSanitizeFilename(originalFilename)}`;
+}

@@ -283,24 +283,24 @@ els.form.addEventListener('submit', async e => {
   try {
     let thumbnailUrl = existingThumbnailUrl;
     if (pendingThumbnailFile) {
-      thumbnailUrl = await uploadImage(pendingThumbnailFile, `${slug}/thumbnail-${Date.now()}.${adminFileExt(pendingThumbnailFile.name)}`);
+      thumbnailUrl = await uploadImage(pendingThumbnailFile, adminBuildUploadPath(slug, 'thumbnail', pendingThumbnailFile.name));
     }
 
     let bannerUrl = existingBannerUrl;
     if (pendingBannerFile) {
-      bannerUrl = await uploadImage(pendingBannerFile, `${slug}/banner-${Date.now()}.${adminFileExt(pendingBannerFile.name)}`);
+      bannerUrl = await uploadImage(pendingBannerFile, adminBuildUploadPath(slug, 'banner', pendingBannerFile.name));
     }
 
     const newGalleryUrls = [];
     for (const file of pendingGalleryFiles) {
-      const url = await uploadImage(file, `${slug}/gallery-${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${adminFileExt(file.name)}`);
+      const url = await uploadImage(file, adminBuildUploadPath(slug, 'gallery', file.name));
       newGalleryUrls.push(url);
     }
     const gallery = existingGalleryUrls.concat(newGalleryUrls);
 
     let pdfPath = existingPdfPath;
     if (pendingPdfFile) {
-      pdfPath = `${slug}/${Date.now()}-${pendingPdfFile.name}`;
+      pdfPath = adminBuildUploadPath(slug, 'pdf', pendingPdfFile.name);
       const { error: pdfError } = await window.sb.storage.from('product-files').upload(pdfPath, pendingPdfFile, { upsert: true });
       if (pdfError) throw pdfError;
     }
