@@ -17,8 +17,18 @@
 // - header x-chariow-signature: "sha256=<hex>", HMAC-SHA256 du corps BRUT.
 // - header x-pulse-delivery-id : clé d'idempotence.
 // - header x-pulse-event : seul "successful.sale" est traité.
+import { Resend } from 'resend';
 
 const SUPABASE_URL = 'https://cawyrfbmwpcoanftybew.supabase.co';
+// Domaine réel du site, confirmé en direct le 2026-08-12 : le
+// "arcanes-mystiques.fr" utilisé jusqu'ici dans ce projet (y compris dans
+// mon propre commit précédent) ne résout même pas — jamais un vrai
+// domaine, juste une valeur codée en dur. livremystique.com (avec
+// redirection vers www.) est le vrai domaine en production, et c'est celui
+// vérifié sur Resend pour l'envoi d'email. Corrigé ici ; api/product.js et
+// api/sitemap.js ont le même problème préexistant, non touché dans ce
+// commit (hors périmètre de la tâche demandée).
+const SITE_URL = 'https://www.livremystique.com';
 
 function jsonResponse(payload, status = 200) {
   return new Response(JSON.stringify(payload), {
@@ -49,30 +59,39 @@ function randomToken() {
     .join('');
 }
 
-async function sendDownloadEmail({ resendApiKey, to, firstName, productTitle, downloadUrl }) {
-  const response = await fetch('https://api.resend.com/emails', {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${resendApiKey}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      from: 'Arcanes Mystiques <commandes@arcanes-mystiques.fr>',
-      to: [to],
-      subject: `Ton ebook "${productTitle}" est prêt`,
-      html: `
-        <p>Bonjour ${firstName || ''},</p>
-        <p>Merci pour ton achat ! Voici ton lien de téléchargement sécurisé pour <strong>${productTitle}</strong> :</p>
-        <p><a href="${downloadUrl}">${downloadUrl}</a></p>
-        <p>Ce lien reste actif 30 jours et peut être utilisé jusqu'à 5 fois.</p>
-        <p>À bientôt,<br>Arcanes Mystiques</p>
-      `,
-    }),
+// Le lien de téléchargement n'est jamais un lien direct/permanent vers le
+// PDF : downloadUrl pointe vers api/download.js, qui vérifie le jeton
+// (expiration 30 jours, 5 usages max — voir handleEbookSale ci-dessous)
+// avant de générer, à la demande, une URL signée Supabase Storage de 60
+// secondes. Un partage du lien reçu par email reste donc borné par ce
+// jeton, jamais un accès permanent au fichier.
+async function sendDownloadEmail({ resendApiKey, internalReference, to, firstName, productTitle, downloadUrl }) {
+  const resend = new Resend(resendApiKey);
+
+  const { data, error } = await resend.emails.send({
+    from: 'Arcanes Mystiques <noreply@livremystique.com>',
+    to: [to],
+    subject: `Confirmation de ton achat — ${productTitle}`,
+    html: `
+      <p>Bonjour ${firstName || ''},</p>
+      <p>Merci pour ton achat ! Voici ton lien de téléchargement sécurisé pour <strong>${productTitle}</strong> :</p>
+      <p><a href="${downloadUrl}">${downloadUrl}</a></p>
+      <p>Ce lien reste actif 30 jours et peut être utilisé jusqu'à 5 fois.</p>
+      <p>À bientôt,<br>Arcanes Mystiques</p>
+    `,
   });
-  if (!response.ok) {
-    const errText = await response.text().catch(() => '');
-    throw new Error(`resend_failed: ${response.status} ${errText}`);
+
+  if (error) {
+    // Ne JAMAIS lever d'exception ici qui remonterait jusqu'au webhook :
+    // l'appelant (handleEbookSale) doit pouvoir continuer/logger sans faire
+    // échouer la réponse 200 à Chariow. Voir le commentaire sur l'appel de
+    // sendDownloadEmail plus bas pour le détail de ce choix.
+    console.error('chariow-webhook: Resend a refusé l\'envoi', { internalReference, to, error });
+    return { success: false, error };
   }
+
+  console.log('chariow-webhook: email de confirmation envoyé', { internalReference, to, resendEmailId: data?.id });
+  return { success: true, resendEmailId: data?.id };
 }
 
 async function handleEbookSale(supabaseUrl, serviceRoleKey, resendApiKey, sale, order) {
@@ -141,23 +160,28 @@ async function handleEbookSale(supabaseUrl, serviceRoleKey, resendApiKey, sale, 
     body: JSON.stringify({ order_id: order.id, token, max_downloads: 5, expires_at: expiresAt }),
   });
 
-  const downloadUrl = `https://arcanes-mystiques.fr/api/download?token=${token}`;
+  const downloadUrl = `${SITE_URL}/api/download?token=${token}`;
 
   if (resendApiKey) {
-    try {
-      await sendDownloadEmail({
-        resendApiKey,
-        to: order.buyer_email,
-        firstName: order.buyer_first_name,
-        productTitle: product.title,
+    // La commande est déjà marquée "completed" et le jeton de
+    // téléchargement existe en base avant même cet appel : que Resend
+    // réussisse ou échoue ne change jamais la réponse renvoyée à Chariow
+    // (voir sendDownloadEmail, qui retourne {success:false} au lieu de
+    // lever une exception) — Chariow ne doit jamais retenter la livraison
+    // du Pulse juste parce que l'envoi d'email a un souci passager.
+    const result = await sendDownloadEmail({
+      resendApiKey,
+      internalReference,
+      to: order.buyer_email,
+      firstName: order.buyer_first_name,
+      productTitle: product.title,
+      downloadUrl,
+    });
+    if (!result.success) {
+      console.error('chariow-webhook: email non envoyé, commande quand même marquée payée — lien à renvoyer manuellement si besoin', {
+        internalReference,
         downloadUrl,
       });
-    } catch (err) {
-      // La commande est déjà marquée "completed" et le lien existe : un
-      // échec d'envoi d'email ne doit jamais faire perdre l'achat. Loggé
-      // pour renvoi manuel si besoin, mais ne fait pas échouer le webhook
-      // (Chariow ne doit pas retenter juste parce que Resend a un souci).
-      console.error('chariow-webhook: email send failed, order still completed', { internalReference, error: String(err) });
     }
   } else {
     console.error('chariow-webhook: RESEND_API_KEY not configured, download link not emailed', { internalReference, downloadUrl });

@@ -15,7 +15,9 @@ const { createClient } = require('@supabase/supabase-js');
 const { randomUUID } = require('crypto');
 
 const SUPABASE_URL = 'https://cawyrfbmwpcoanftybew.supabase.co';
-const SITE_URL = 'https://arcanes-mystiques.fr';
+// Domaine réel confirmé en direct le 2026-08-12 — "arcanes-mystiques.fr"
+// ne résout pas, voir la même note dans api/chariow-webhook.mjs.
+const SITE_URL = 'https://www.livremystique.com';
 
 function isValidEmail(email) {
   return typeof email === 'string' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
