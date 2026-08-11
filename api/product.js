@@ -109,10 +109,10 @@ module.exports = async (req, res) => {
     ? `<span class="buy-price-current">${formatPrice(product.promo_price)}</span><span class="buy-price-old">${formatPrice(product.price)}</span><span class="buy-save">−${discountPct} %</span>`
     : `<span class="buy-price-current">${formatPrice(product.price)}</span>`;
 
-  // Le fichier PDF est stocké dans un espace privé : aucun système de paiement
-  // n'existe encore pour vérifier un achat, donc le téléchargement public
-  // reste désactivé par honnêteté fonctionnelle plutôt que simulé.
-  const downloadBtn = `<button class="btn btn-secondary download-btn" disabled aria-disabled="true">Télécharger</button>\n              <p class="download-note">Disponible après achat</p>`;
+  // Paiement Chariow branché (voir api/chariow-checkout.js/chariow-webhook.mjs) :
+  // plus de bouton "Télécharger" ici, la livraison se fait par email
+  // (lien sécurisé) après confirmation du paiement, pas depuis cette page.
+  const downloadBtn = `<p class="download-note">Livraison immédiate par email après paiement</p>`;
 
   const fullDescParagraphs = String(product.full_description || '').split(/\n\n+/).filter(Boolean);
   const fullDescHtml = fullDescParagraphs.map(p => `        <p>${escapeHtml(p)}</p>`).join('\n');
@@ -233,7 +233,7 @@ ${related.map((p, i) => renderCard(p, (i % 4) + 1)).join('\n')}
             ${priceRow}
           </div>
           <div class="buy-btns">
-            <button class="btn btn-primary btn-buy" data-title="${escapeHtml(product.title)}">Acheter maintenant</button>
+            <button class="btn btn-primary btn-buy" data-title="${escapeHtml(product.title)}" data-slug="${escapeHtml(product.slug)}">Acheter maintenant</button>
             ${downloadBtn}
           </div>
         </div>

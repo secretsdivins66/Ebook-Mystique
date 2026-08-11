@@ -27,6 +27,7 @@ const els = {
   fullDesc: document.getElementById('f-full-desc'),
   price: document.getElementById('f-price'),
   promoPrice: document.getElementById('f-promo-price'),
+  chariowProductId: document.getElementById('f-chariow-product-id'),
   seoTitle: document.getElementById('f-seo-title'),
   seoDesc: document.getElementById('f-seo-desc'),
   seoKeywords: document.getElementById('f-seo-keywords'),
@@ -85,6 +86,7 @@ async function loadExistingProduct() {
   els.fullDesc.value = data.full_description || '';
   els.price.value = data.price ?? '';
   els.promoPrice.value = data.promo_price ?? '';
+  els.chariowProductId.value = data.chariow_product_id || '';
   els.seoTitle.value = data.seo_meta_title || '';
   els.seoDesc.value = data.seo_meta_description || '';
   els.seoKeywords.value = data.seo_keywords || '';
@@ -313,6 +315,7 @@ els.form.addEventListener('submit', async e => {
       category,
       price,
       promo_price: promoPrice,
+      chariow_product_id: els.chariowProductId.value.trim() || null,
       thumbnail_url: thumbnailUrl,
       banner_url: bannerUrl,
       gallery,

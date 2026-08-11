@@ -196,19 +196,111 @@ document.addEventListener('DOMContentLoaded', () => {
     toast._t = setTimeout(() => toast.classList.remove('show'), 3800);
   }
 
-  /* ---------- Buy / Cart buttons ---------- */
+  /* ---------- Buy button → paiement Chariow ----------
+     Indicatifs pays au format ISO alpha-2 (confirmé en live côté Secret
+     Divin le 2026-08-09 : Chariow rejette un indicatif nu comme "225",
+     accepte "CI"). Le pays par défaut ici est la France (site en euros),
+     contrairement à Secret Divin (zone FCFA). */
+  const COUNTRY_CODES = [
+    { code: 'FR', label: 'France (+33)' },
+    { code: 'BE', label: 'Belgique (+32)' },
+    { code: 'CH', label: 'Suisse (+41)' },
+    { code: 'CA', label: 'Canada (+1)' },
+    { code: 'CI', label: "Côte d'Ivoire (+225)" },
+    { code: 'SN', label: 'Sénégal (+221)' },
+  ];
+
+  function closeCheckoutModal() {
+    document.querySelector('.checkout-modal-overlay')?.remove();
+  }
+
+  function openCheckoutModal(slug, title) {
+    const overlay = document.createElement('div');
+    overlay.className = 'checkout-modal-overlay';
+    overlay.innerHTML = `
+      <div class="checkout-modal" role="dialog" aria-modal="true" aria-labelledby="checkout-modal-title">
+        <h3 id="checkout-modal-title">Tes infos pour le paiement</h3>
+        <p class="checkout-modal-note">Requises par notre prestataire de paiement pour confirmer ta commande de « ${title} ».</p>
+        <form class="checkout-form">
+          <div class="form-grid">
+            <div class="form-group"><label for="co-first-name">Prénom</label><input type="text" id="co-first-name" required></div>
+            <div class="form-group"><label for="co-last-name">Nom</label><input type="text" id="co-last-name" required></div>
+            <div class="form-group"><label for="co-email">Email</label><input type="email" id="co-email" required></div>
+            <div class="form-group"><label for="co-country">Pays</label>
+              <select id="co-country">${COUNTRY_CODES.map(c => `<option value="${c.code}">${c.label}</option>`).join('')}</select>
+            </div>
+            <div class="form-group"><label for="co-phone">Téléphone</label><input type="tel" id="co-phone" required></div>
+          </div>
+          <p class="checkout-modal-error" hidden></p>
+          <div class="checkout-modal-actions">
+            <button type="submit" class="btn btn-primary">Continuer vers le paiement</button>
+            <button type="button" class="btn btn-secondary checkout-cancel">Annuler</button>
+          </div>
+        </form>
+      </div>`;
+    document.body.appendChild(overlay);
+
+    overlay.addEventListener('click', e => { if (e.target === overlay) closeCheckoutModal(); });
+    overlay.querySelector('.checkout-cancel').addEventListener('click', closeCheckoutModal);
+
+    const form = overlay.querySelector('.checkout-form');
+    const errorEl = overlay.querySelector('.checkout-modal-error');
+    const submitBtn = form.querySelector('button[type="submit"]');
+
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+      errorEl.hidden = true;
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Chargement...';
+
+      try {
+        const response = await fetch('/api/chariow-checkout', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            slug,
+            firstName: form.querySelector('#co-first-name').value.trim(),
+            lastName: form.querySelector('#co-last-name').value.trim(),
+            email: form.querySelector('#co-email').value.trim().toLowerCase(),
+            phone: {
+              number: form.querySelector('#co-phone').value.trim(),
+              countryCode: form.querySelector('#co-country').value,
+            },
+          }),
+        });
+        const json = await response.json().catch(() => ({}));
+
+        if (response.ok && json.step === 'payment' && json.checkoutUrl) {
+          window.location.href = json.checkoutUrl;
+          return;
+        }
+        if (response.ok && (json.step === 'completed' || json.step === 'already_purchased')) {
+          errorEl.textContent = json.message || 'Cet achat a déjà été finalisé.';
+          errorEl.hidden = false;
+        } else {
+          errorEl.textContent = 'Le paiement a échoué, réessaie plus tard.';
+          errorEl.hidden = false;
+        }
+      } catch {
+        errorEl.textContent = 'Impossible de contacter le serveur de paiement, réessaie plus tard.';
+        errorEl.hidden = false;
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Continuer vers le paiement';
+      }
+    });
+  }
+
   document.querySelectorAll('button.btn-buy').forEach(btn => {
-    const originalLabel = btn.textContent;
     btn.addEventListener('click', e => {
       e.preventDefault();
+      const slug = btn.dataset.slug;
       const title = btn.closest('[data-title]')?.dataset.title || 'cet ebook';
-      showToast(`"${title}" ajouté au panier`);
-      btn.textContent = 'Ajouté au panier';
-      btn.classList.add('is-added');
-      setTimeout(() => {
-        btn.textContent = originalLabel;
-        btn.classList.remove('is-added');
-      }, 2800);
+      if (!slug) {
+        showToast('Ce produit n’est pas encore disponible à l’achat.');
+        return;
+      }
+      openCheckoutModal(slug, title);
     });
   });
 
