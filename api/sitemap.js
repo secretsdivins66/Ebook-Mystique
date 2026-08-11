@@ -2,7 +2,9 @@ const { createClient } = require('@supabase/supabase-js');
 
 const SUPABASE_URL = 'https://cawyrfbmwpcoanftybew.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNhd3lyZmJtd3Bjb2FuZnR5YmV3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA5MjQxNDcsImV4cCI6MjA5NjUwMDE0N30.sMq_LhdpFpKTMCVXgIkDV-w5Zw8jBUktedj31b2q2dE';
-const SITE_URL = 'https://arcanes-mystiques.fr';
+// Domaine réel confirmé en direct le 2026-08-12 (voir chariow-checkout.js/
+// chariow-webhook.mjs) — "arcanes-mystiques.fr" ne résolvait pas.
+const SITE_URL = 'https://www.livremystique.com';
 
 const sb = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 

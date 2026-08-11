@@ -5,6 +5,11 @@ qu'un client puisse réellement payer et recevoir un ebook. Comme pour
 `SUPABASE-SETUP.md`, chaque étape se fait depuis un tableau de bord — aucune
 clé sensible n'a besoin d'être partagée avec qui que ce soit d'autre que toi.
 
+> Le domaine réel du site est **`livremystique.com`** (redirige vers
+> `www.livremystique.com`) — corrigé le 2026-08-12 partout où
+> `arcanes-mystiques.fr` (jamais un vrai domaine, ne résolvait pas) était
+> utilisé par erreur dans ce projet.
+
 ## 1. Exécuter la migration SQL
 
 1. [Tableau de bord Supabase](https://supabase.com/dashboard) → ce projet
@@ -43,7 +48,7 @@ Secret Divin, crée-en une nouvelle rien que pour ce site :
 1. app.chariow.com → **Automations** → **Pulses** → **Add Pulse**.
 2. URL du Pulse :
    ```
-   https://arcanes-mystiques.fr/api/chariow-webhook
+   https://www.livremystique.com/api/chariow-webhook
    ```
 3. Événement à écouter : `successful.sale`.
 4. Une fois créée, Chariow affiche un secret de signature (`whsec_...`) —
@@ -52,11 +57,12 @@ Secret Divin, crée-en une nouvelle rien que pour ce site :
 ## 4. Créer un compte Resend (envoi des emails de livraison)
 
 1. [resend.com](https://resend.com) → créer un compte.
-2. **Vérifier le domaine `arcanes-mystiques.fr`** : Resend → Domains → Add
-   Domain → suit les instructions (ajouter les enregistrements DNS fournis
-   chez ton hébergeur de domaine). Sans ce domaine vérifié, l'envoi
-   échouera — l'adresse d'expéditeur configurée dans le code est
-   `commandes@arcanes-mystiques.fr`.
+2. **Vérifier le domaine `livremystique.com`** (le vrai domaine du site —
+   voir la note en tête de ce document) : Resend → Domains → Add Domain →
+   suit les instructions (ajouter les enregistrements DNS fournis chez ton
+   hébergeur de domaine). Sans ce domaine vérifié, l'envoi échouera —
+   l'adresse d'expéditeur configurée dans le code est
+   `noreply@livremystique.com`.
 3. Resend → API Keys → créer une clé, la garder pour l'étape 5.
 
 ## 5. Renseigner les variables d'environnement sur Vercel

@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /admin/
 
-Sitemap: https://arcanes-mystiques.fr/sitemap.xml
+Sitemap: https://www.livremystique.com/sitemap.xml

@@ -74,7 +74,7 @@ alter table public.downloads enable row level security;
 -- 1. Créer un produit Chariow (EUR) pour chaque ebook à vendre, coller
 --    son product_id dans le champ correspondant du formulaire admin.
 -- 2. Créer une nouvelle Pulse (Automations → Pulses) sur app.chariow.com
---    pointant vers https://arcanes-mystiques.fr/api/chariow-webhook,
+--    pointant vers https://www.livremystique.com/api/chariow-webhook,
 --    récupérer son secret de signature.
 -- 3. Renseigner les variables d'environnement sur Vercel (voir
 --    CHARIOW-SETUP.md) : CHARIOW_API_KEY, CHARIOW_WEBHOOK_SECRET,
