@@ -197,18 +197,12 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* ---------- Buy button → paiement Chariow ----------
-     Indicatifs pays au format ISO alpha-2 (confirmé en live côté Secret
+     Indicatif pays au format ISO alpha-2 (confirmé en live côté Secret
      Divin le 2026-08-09 : Chariow rejette un indicatif nu comme "225",
-     accepte "CI"). Le pays par défaut ici est la France (site en euros),
-     contrairement à Secret Divin (zone FCFA). */
-  const COUNTRY_CODES = [
-    { code: 'FR', label: 'France (+33)' },
-    { code: 'BE', label: 'Belgique (+32)' },
-    { code: 'CH', label: 'Suisse (+41)' },
-    { code: 'CA', label: 'Canada (+1)' },
-    { code: 'CI', label: "Côte d'Ivoire (+225)" },
-    { code: 'SN', label: 'Sénégal (+221)' },
-  ];
+     accepte "CI"). Pas de sélecteur visible ici — un seul indicatif par
+     défaut suffit puisque la boutique cible la zone FCFA (Côte d'Ivoire,
+     même zone que Secret Divin depuis le passage EUR→XOF). */
+  const DEFAULT_COUNTRY_CODE = 'CI';
 
   function closeCheckoutModal() {
     document.querySelector('.checkout-modal-overlay')?.remove();
@@ -226,9 +220,6 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="form-group"><label for="co-first-name">Prénom</label><input type="text" id="co-first-name" required></div>
             <div class="form-group"><label for="co-last-name">Nom</label><input type="text" id="co-last-name" required></div>
             <div class="form-group"><label for="co-email">Email</label><input type="email" id="co-email" required></div>
-            <div class="form-group"><label for="co-country">Pays</label>
-              <select id="co-country">${COUNTRY_CODES.map(c => `<option value="${c.code}">${c.label}</option>`).join('')}</select>
-            </div>
             <div class="form-group"><label for="co-phone">Téléphone</label><input type="tel" id="co-phone" required></div>
           </div>
           <p class="checkout-modal-error" hidden></p>
@@ -264,7 +255,7 @@ document.addEventListener('DOMContentLoaded', () => {
             email: form.querySelector('#co-email').value.trim().toLowerCase(),
             phone: {
               number: form.querySelector('#co-phone').value.trim(),
-              countryCode: form.querySelector('#co-country').value,
+              countryCode: DEFAULT_COUNTRY_CODE,
             },
           }),
         });
