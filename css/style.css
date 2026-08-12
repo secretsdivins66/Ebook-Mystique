@@ -1156,6 +1156,10 @@ h1,h2,h3,h4 {
 .form-group select option { background: var(--bg-tertiary); }
 .form-group textarea { resize: vertical; min-height: 130px; }
 
+.phone-input-group { display: flex; gap: 0.7rem; }
+#co-country { flex: 0 0 auto; width: 5.4rem; padding-right: 0 !important; }
+#co-phone { flex: 1 1 auto; min-width: 0; }
+
 /* ---------- Product Detail Page ---------- */
 .ebook-detail-hero {
   padding: calc(var(--nav-height) + 2rem) 0 var(--space-md);

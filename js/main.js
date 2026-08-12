@@ -197,10 +197,23 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* ---------- Buy button → paiement Chariow ----------
-     Pas de sélecteur pays visible ici : le serveur déduit l'indicatif
-     (format ISO alpha-2 requis par Chariow, ex. "CI") depuis le header
-     `x-vercel-ip-country` injecté automatiquement par Vercel selon l'IP
-     du visiteur — voir api/chariow-checkout.js. */
+     Sélecteur pays par drapeau, choisi par l'utilisateur lui-même — une
+     détection IP seule s'est montrée peu fiable (cf. commit précédent :
+     géolocalisation en Guinée + numéro ivoirien rejeté par Chariow).
+     "CI" présélectionné par défaut (zone principale de la boutique),
+     l'indicatif ISO alpha-2 choisi part vers api/chariow-checkout.js. */
+  const COUNTRY_OPTIONS = [
+    { code: 'CI', flag: '🇨🇮', name: "Côte d'Ivoire" },
+    { code: 'SN', flag: '🇸🇳', name: 'Sénégal' },
+    { code: 'ML', flag: '🇲🇱', name: 'Mali' },
+    { code: 'BF', flag: '🇧🇫', name: 'Burkina Faso' },
+    { code: 'BJ', flag: '🇧🇯', name: 'Bénin' },
+    { code: 'TG', flag: '🇹🇬', name: 'Togo' },
+    { code: 'NE', flag: '🇳🇪', name: 'Niger' },
+    { code: 'GN', flag: '🇬🇳', name: 'Guinée' },
+    { code: 'CM', flag: '🇨🇲', name: 'Cameroun' },
+    { code: 'FR', flag: '🇫🇷', name: 'France' },
+  ];
 
   function closeCheckoutModal() {
     document.querySelector('.checkout-modal-overlay')?.remove();
@@ -209,6 +222,9 @@ document.addEventListener('DOMContentLoaded', () => {
   function openCheckoutModal(slug, title) {
     const overlay = document.createElement('div');
     overlay.className = 'checkout-modal-overlay';
+    const countryOptionsHtml = COUNTRY_OPTIONS
+      .map(c => `<option value="${c.code}"${c.code === 'CI' ? ' selected' : ''}>${c.flag} ${c.code}</option>`)
+      .join('');
     overlay.innerHTML = `
       <div class="checkout-modal" role="dialog" aria-modal="true" aria-labelledby="checkout-modal-title">
         <h3 id="checkout-modal-title">Tes infos pour le paiement</h3>
@@ -218,7 +234,13 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="form-group"><label for="co-first-name">Prénom</label><input type="text" id="co-first-name" required></div>
             <div class="form-group"><label for="co-last-name">Nom</label><input type="text" id="co-last-name" required></div>
             <div class="form-group"><label for="co-email">Email</label><input type="email" id="co-email" required></div>
-            <div class="form-group"><label for="co-phone">Téléphone</label><input type="tel" id="co-phone" required></div>
+            <div class="form-group">
+              <label for="co-phone">Téléphone</label>
+              <div class="phone-input-group">
+                <select id="co-country" aria-label="Pays de l'indicatif téléphonique">${countryOptionsHtml}</select>
+                <input type="tel" id="co-phone" required>
+              </div>
+            </div>
           </div>
           <p class="checkout-modal-error" hidden></p>
           <div class="checkout-modal-actions">
@@ -253,6 +275,7 @@ document.addEventListener('DOMContentLoaded', () => {
             email: form.querySelector('#co-email').value.trim().toLowerCase(),
             phone: {
               number: form.querySelector('#co-phone').value.trim(),
+              countryCode: form.querySelector('#co-country').value,
             },
           }),
         });

@@ -23,14 +23,22 @@ function isValidEmail(email) {
   return typeof email === 'string' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
-// Vercel injecte ce header sur chaque requête (Serverless et Edge) en le
-// déduisant de l'IP réelle du visiteur — plus fiable qu'un indicatif fixe
-// ou qu'un champ pays visible côté client. "XX" = Vercel n'a pas pu
-// déterminer le pays ; on retombe alors sur CI (zone principale de la
-// boutique) plutôt que d'envoyer un indicatif invalide à Chariow.
-function resolveCountryCode(req) {
-  const header = String(req.headers['x-vercel-ip-country'] || '').trim().toUpperCase();
-  return /^[A-Z]{2}$/.test(header) && header !== 'XX' ? header : 'CI';
+const isValidCountryCode = code => /^[A-Z]{2}$/.test(code) && code !== 'XX';
+
+// Le client choisit désormais son pays via un sélecteur drapeau (voir
+// js/main.js) — c'est la source de vérité, l'utilisateur sait mieux que
+// quiconque d'où vient son propre numéro (une détection IP seule s'est
+// montrée peu fiable en Afrique de l'Ouest, cf. commit précédent : une
+// requête géolocalisée en Guinée avec un numéro ivoirien était rejetée
+// par Chariow). Le header `x-vercel-ip-country` de Vercel ne sert plus
+// que de filet de secours si le client omet ce champ, "CI" en dernier
+// recours (zone principale de la boutique).
+function resolveCountryCode(req, clientCountryCode) {
+  const fromClient = String(clientCountryCode || '').trim().toUpperCase();
+  if (isValidCountryCode(fromClient)) return fromClient;
+  const fromHeader = String(req.headers['x-vercel-ip-country'] || '').trim().toUpperCase();
+  if (isValidCountryCode(fromHeader)) return fromHeader;
+  return 'CI';
 }
 
 module.exports = async (req, res) => {
@@ -104,7 +112,7 @@ module.exports = async (req, res) => {
       email,
       first_name: firstName.trim(),
       last_name: lastName.trim(),
-      phone: { number: phone.number.trim(), country_code: resolveCountryCode(req) },
+      phone: { number: phone.number.trim(), country_code: resolveCountryCode(req, phone.countryCode) },
       payment_currency: 'XOF',
       redirect_url: `${SITE_URL}/merci.html`,
       // Repris tel quel dans les Pulses — c'est le seul lien fiable entre
