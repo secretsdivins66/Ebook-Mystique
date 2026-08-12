@@ -1003,6 +1003,20 @@ h1,h2,h3,h4 {
 .footer-bottom a { color: var(--text-muted); }
 .footer-bottom a:hover { color: var(--gold); }
 
+/* ---------- Merci (thank you) page -----------
+   Peu de contenu par rapport à une page normale : sans ceci, le
+   .page-hero (32vh) laisse un grand aplat vide en dessous du footer sur
+   un écran classique. Scopé à cette page via .thank-you-page — ne touche
+   pas .page-hero lui-même, partagé avec contact.html qui a besoin de
+   rester une bannière courte au-dessus de son propre contenu. */
+.thank-you-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.thank-you-page .page-hero { flex: 1; }
+
 /* ---------- Contact Page ---------- */
 .page-hero {
   min-height: 32vh;
@@ -1233,6 +1247,7 @@ h1,h2,h3,h4 {
   font-size: 1.8rem;
   font-weight: 600;
   color: var(--gold-light);
+  white-space: nowrap;
 }
 
 .buy-price-old {
@@ -1240,6 +1255,7 @@ h1,h2,h3,h4 {
   color: var(--text-muted);
   text-decoration: line-through;
   padding-bottom: 0.4rem;
+  white-space: nowrap;
 }
 
 .buy-save {
@@ -1431,7 +1447,7 @@ h1,h2,h3,h4 {
 
   .buy-box { padding: 1.6rem; }
   .buy-price-current { font-size: 2.2rem; }
-  .buy-price-row { flex-wrap: nowrap; gap: 1rem; }
+  .buy-price-row { gap: 1rem; }
 
   .book-mark-lg { font-size: 5.4rem; }
 
@@ -1550,8 +1566,9 @@ h1,h2,h3,h4 {
 
 .checkout-modal-actions {
   display: flex;
-  gap: 1rem;
+  flex-direction: column;
+  gap: 0.9rem;
   margin-top: 1.8rem;
 }
 
-.checkout-modal-actions .btn { flex: 1; justify-content: center; }
+.checkout-modal-actions .btn { justify-content: center; }
