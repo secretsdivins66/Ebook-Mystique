@@ -28,7 +28,7 @@ Chariow n'a pas d'API pour créer un produit — ça se fait à la main :
 1. [app.chariow.com](https://app.chariow.com) → **Produits** → nouveau
    produit.
 2. **Même compte/boutique que Secret Divin** (confirmé le 2026-08-12).
-3. Prix et **devise = EUR**, exactement le même prix que celui renseigné
+3. Prix et **devise = XOF (FCFA)**, exactement le même prix que celui renseigné
    dans l'admin du site pour cet ebook (prix promo si il y en a un — c'est
    toujours le prix promo qui est facturé en priorité s'il existe).
 4. Une fois créé, copie son identifiant (`prd_...`) et colle-le dans le champ

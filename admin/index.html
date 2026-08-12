@@ -60,7 +60,7 @@
     document.getElementById('logout-btn').addEventListener('click', () => AdminAuth.logout());
 
     function formatPrice(n) {
-      return Number(n).toFixed(2).replace('.', ',') + ' €';
+      return Math.round(Number(n)).toLocaleString('fr-FR') + ' FCFA';
     }
 
     async function loadProducts() {

@@ -95,7 +95,7 @@ module.exports = async (req, res) => {
       first_name: firstName.trim(),
       last_name: lastName.trim(),
       phone: { number: phone.number.trim(), country_code: phone.countryCode.trim() },
-      payment_currency: 'EUR',
+      payment_currency: 'XOF',
       redirect_url: `${SITE_URL}/merci.html`,
       // Repris tel quel dans les Pulses — c'est le seul lien fiable entre
       // une vente Chariow et notre commande. "productId"/"internalReference"
@@ -130,7 +130,7 @@ module.exports = async (req, res) => {
       buyer_first_name: firstName.trim(),
       buyer_last_name: lastName.trim(),
       amount,
-      currency: 'EUR',
+      currency: 'XOF',
       status: step === 'completed' || step === 'already_purchased' ? 'completed' : 'pending',
       internal_reference: internalReference,
       raw_payload: { request: chariowRequestBody, response: chariowResponseJson },

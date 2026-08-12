@@ -17,7 +17,7 @@ function escapeHtml(str) {
 }
 
 function formatPrice(n) {
-  return Number(n).toFixed(2).replace('.', ',') + ' €';
+  return Math.round(Number(n)).toLocaleString('fr-FR') + ' FCFA';
 }
 
 function renderCard(p, toneIndex) {
@@ -183,8 +183,8 @@ ${related.map((p, i) => renderCard(p, (i % 4) + 1)).join('\n')}
     "category": ${JSON.stringify(product.category || '')},
     "offers": {
       "@type": "Offer",
-      "price": "${(hasPromo ? product.promo_price : product.price).toFixed(2)}",
-      "priceCurrency": "EUR",
+      "price": "${Math.round(hasPromo ? product.promo_price : product.price)}",
+      "priceCurrency": "XOF",
       "availability": "https://schema.org/InStock",
       "url": "${url}"
     }

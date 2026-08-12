@@ -29,7 +29,7 @@ create table if not exists public.orders (
   buyer_first_name text not null,
   buyer_last_name text not null,
   amount numeric(10,2) not null,
-  currency text not null default 'EUR',
+  currency text not null default 'XOF',
   status text not null default 'pending' check (status in ('pending', 'completed', 'failed')),
   internal_reference text unique not null,
   chariow_sale_id text,
@@ -71,7 +71,7 @@ alter table public.downloads enable row level security;
 
 -- ============================================================
 -- Terminé. Étapes suivantes (voir CHARIOW-SETUP.md) :
--- 1. Créer un produit Chariow (EUR) pour chaque ebook à vendre, coller
+-- 1. Créer un produit Chariow (XOF/FCFA) pour chaque ebook à vendre, coller
 --    son product_id dans le champ correspondant du formulaire admin.
 -- 2. Créer une nouvelle Pulse (Automations → Pulses) sur app.chariow.com
 --    pointant vers https://www.livremystique.com/api/chariow-webhook,

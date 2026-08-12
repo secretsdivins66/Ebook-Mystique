@@ -404,7 +404,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function formatPrice(n) {
-    return Number(n).toFixed(2).replace('.', ',') + ' €';
+    return Math.round(Number(n)).toLocaleString('fr-FR') + ' FCFA';
   }
 
   function renderProductCard(p, toneIndex) {
