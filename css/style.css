@@ -503,45 +503,6 @@ h1,h2,h3,h4 {
   50%      { opacity: 1; transform: scaleY(1.15); }
 }
 
-/* ---------- Features ---------- */
-.features { background: var(--bg-secondary); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-
-.features-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 2rem;
-}
-
-.feature-card {
-  padding: 0;
-  text-align: left;
-  border-left: none;
-}
-
-.feature-index {
-  display: block;
-  font-family: var(--font-display);
-  font-size: 0.85rem;
-  color: var(--gold-deep);
-  letter-spacing: 0.1em;
-  margin-bottom: 1.1rem;
-}
-
-.feature-card h3 {
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: var(--text-primary);
-  margin-bottom: 0.7rem;
-  letter-spacing: 0.02em;
-}
-
-.feature-card p {
-  font-size: 0.88rem;
-  font-weight: 300;
-  color: var(--text-secondary);
-  line-height: 1.7;
-}
-
 /* ---------- Ebooks Grid ---------- */
 .ebooks-section { background: var(--bg-primary); }
 
@@ -1448,8 +1409,6 @@ h1,h2,h3,h4 {
   .hero-scroll { display: flex; }
   .hero-text { padding: 0 0.5rem; }
 
-  .features-grid { grid-template-columns: repeat(2, 1fr); gap: 2.4rem; }
-
   .footer-grid { grid-template-columns: 1fr; gap: 1.8rem; }
 
   .nav-logo { font-size: 1.15rem; }
@@ -1521,10 +1480,6 @@ h1,h2,h3,h4 {
   .footer-grid { grid-template-columns: 2fr 1fr 1fr 1.5fr; }
   .footer-grid--compact { grid-template-columns: 2fr 1fr 1.5fr; }
   .footer-bottom { flex-direction: row; text-align: left; }
-
-  .features-grid { grid-template-columns: repeat(4, 1fr); gap: 0; }
-  .feature-card { padding: 0 var(--space-md); border-left: 1px solid var(--line); }
-  .feature-card:first-child { border-left: none; padding-left: 0; }
 
   .contact-grid { grid-template-columns: 1fr 1.6fr; gap: 4rem; }
 
