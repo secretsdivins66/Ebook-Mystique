@@ -197,12 +197,10 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* ---------- Buy button → paiement Chariow ----------
-     Indicatif pays au format ISO alpha-2 (confirmé en live côté Secret
-     Divin le 2026-08-09 : Chariow rejette un indicatif nu comme "225",
-     accepte "CI"). Pas de sélecteur visible ici — un seul indicatif par
-     défaut suffit puisque la boutique cible la zone FCFA (Côte d'Ivoire,
-     même zone que Secret Divin depuis le passage EUR→XOF). */
-  const DEFAULT_COUNTRY_CODE = 'CI';
+     Pas de sélecteur pays visible ici : le serveur déduit l'indicatif
+     (format ISO alpha-2 requis par Chariow, ex. "CI") depuis le header
+     `x-vercel-ip-country` injecté automatiquement par Vercel selon l'IP
+     du visiteur — voir api/chariow-checkout.js. */
 
   function closeCheckoutModal() {
     document.querySelector('.checkout-modal-overlay')?.remove();
@@ -255,7 +253,6 @@ document.addEventListener('DOMContentLoaded', () => {
             email: form.querySelector('#co-email').value.trim().toLowerCase(),
             phone: {
               number: form.querySelector('#co-phone').value.trim(),
-              countryCode: DEFAULT_COUNTRY_CODE,
             },
           }),
         });

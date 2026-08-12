@@ -23,6 +23,16 @@ function isValidEmail(email) {
   return typeof email === 'string' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
+// Vercel injecte ce header sur chaque requête (Serverless et Edge) en le
+// déduisant de l'IP réelle du visiteur — plus fiable qu'un indicatif fixe
+// ou qu'un champ pays visible côté client. "XX" = Vercel n'a pas pu
+// déterminer le pays ; on retombe alors sur CI (zone principale de la
+// boutique) plutôt que d'envoyer un indicatif invalide à Chariow.
+function resolveCountryCode(req) {
+  const header = String(req.headers['x-vercel-ip-country'] || '').trim().toUpperCase();
+  return /^[A-Z]{2}$/.test(header) && header !== 'XX' ? header : 'CI';
+}
+
 module.exports = async (req, res) => {
   if (req.method === 'OPTIONS') {
     res.status(204).end();
@@ -52,8 +62,7 @@ module.exports = async (req, res) => {
       typeof firstName !== 'string' || !firstName.trim() ||
       typeof lastName !== 'string' || !lastName.trim() ||
       !isValidEmail(email) ||
-      typeof phone?.number !== 'string' || !phone.number.trim() ||
-      typeof phone?.countryCode !== 'string' || !phone.countryCode.trim()
+      typeof phone?.number !== 'string' || !phone.number.trim()
     ) {
       res.status(400).json({ error: 'missing_contact_info' });
       return;
@@ -95,7 +104,7 @@ module.exports = async (req, res) => {
       email,
       first_name: firstName.trim(),
       last_name: lastName.trim(),
-      phone: { number: phone.number.trim(), country_code: phone.countryCode.trim() },
+      phone: { number: phone.number.trim(), country_code: resolveCountryCode(req) },
       payment_currency: 'XOF',
       redirect_url: `${SITE_URL}/merci.html`,
       // Repris tel quel dans les Pulses — c'est le seul lien fiable entre
