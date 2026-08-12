@@ -1,5 +1,5 @@
 /* ============================================================
-   ARCANES MYSTIQUES — Feuille de style principale
+   LIVRE MYSTIQUE — Feuille de style principale
    Direction artistique : manuscrit enluminé — encre, or et papier
    Approche : Mobile First (base = mobile, media queries = min-width)
    ============================================================ */
@@ -258,6 +258,26 @@ h1,h2,h3,h4 {
 }
 
 .btn.is-added::before { transform: scaleX(1); }
+
+/* Bouton d'achat : rempli en or dès le repos (pas seulement au survol,
+   contrairement aux autres .btn-primary) pour qu'il ressorte immédiatement
+   sur la carte produit — même traitement que les CTA de paiement sur
+   Secret Divin (fond or plein, texte sombre, aucun dégradé/glow). */
+.btn-buy {
+  background: var(--gold);
+  color: var(--bg-primary);
+  border-color: var(--gold);
+  box-shadow: 0 4px 16px rgba(198, 161, 95, 0.35);
+}
+
+.btn-buy::before { display: none; }
+
+.btn-buy:hover {
+  background: var(--gold-light);
+  border-color: var(--gold-light);
+  color: var(--bg-primary);
+  box-shadow: 0 6px 20px rgba(198, 161, 95, 0.5);
+}
 
 /* ---------- Navigation ---------- */
 .navbar {

@@ -77,7 +77,7 @@ async function sendDownloadEmail({ resendApiKey, internalReference, to, firstNam
   const resend = new Resend(resendApiKey);
 
   const { data, error } = await resend.emails.send({
-    from: 'Arcanes Mystiques <noreply@livremystique.com>',
+    from: 'Livre Mystique <noreply@livremystique.com>',
     to: [to],
     subject: `Confirmation de ton achat — ${productTitle}`,
     html: `
@@ -85,7 +85,7 @@ async function sendDownloadEmail({ resendApiKey, internalReference, to, firstNam
       <p>Merci pour ton achat ! Voici ton lien de téléchargement sécurisé pour <strong>${productTitle}</strong> :</p>
       <p><a href="${downloadUrl}">${downloadUrl}</a></p>
       <p>Ce lien reste actif 30 jours et peut être utilisé jusqu'à 5 fois.</p>
-      <p>À bientôt,<br>Arcanes Mystiques</p>
+      <p>À bientôt,<br>Livre Mystique</p>
     `,
   });
 
