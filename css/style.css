@@ -1400,9 +1400,9 @@ h1,h2,h3,h4 {
   :root { --nav-height: 70px; }
 
   .container, .nav-container { width: 92%; }
-  .section { padding: var(--space-xl) 0; }
+  .section { padding: var(--space-lg) 0; }
 
-  .section-subtitle { font-size: 1rem; margin-bottom: var(--space-lg); }
+  .section-subtitle { font-size: 1rem; margin-bottom: var(--space-md); }
 
   .hero-content { padding: 1.5rem 1rem; }
   .hero-btns { flex-direction: row; flex-wrap: wrap; }
@@ -1429,7 +1429,7 @@ h1,h2,h3,h4 {
 
   .product-gallery { grid-template-columns: repeat(3, 1fr); }
 
-  .newsletter { padding: var(--space-xl) 0; }
+  .newsletter { padding: var(--space-lg) 0; }
 }
 
 /* ----- ≥601px : tablettes portrait ----- */
@@ -1441,7 +1441,7 @@ h1,h2,h3,h4 {
 /* ----- ≥769px : tablettes / petits ordinateurs portables ----- */
 @media (min-width: 769px) {
   .container, .nav-container { width: 90%; }
-  .section { padding: var(--space-xl) 0; }
+  .section { padding: var(--space-lg) 0; }
 
   .ebook-footer { flex-wrap: nowrap; gap: 1rem; }
   .ebook-footer .btn { width: auto; margin-top: 0 !important; }
