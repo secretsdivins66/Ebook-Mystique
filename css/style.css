@@ -655,6 +655,13 @@ h1,h2,h3,h4 {
   margin-top: 0.4rem !important;
 }
 
+.ebook-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+}
+
 .ebook-price {
   display: flex;
   flex-direction: column;
@@ -1448,6 +1455,7 @@ h1,h2,h3,h4 {
 
   .ebook-footer { flex-wrap: nowrap; gap: 1rem; }
   .ebook-footer .btn { width: auto; margin-top: 0 !important; }
+  .ebook-actions { flex-direction: row; width: auto; }
 
   .testimonial-text { font-size: 1.15rem; }
 

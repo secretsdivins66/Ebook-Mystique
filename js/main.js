@@ -279,17 +279,21 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  document.querySelectorAll('button.btn-buy').forEach(btn => {
-    btn.addEventListener('click', e => {
-      e.preventDefault();
-      const slug = btn.dataset.slug;
-      const title = btn.closest('[data-title]')?.dataset.title || 'cet ebook';
-      if (!slug) {
-        showToast('Ce produit n’est pas encore disponible à l’achat.');
-        return;
-      }
-      openCheckoutModal(slug, title);
-    });
+  // Délégation d'événement (plutôt qu'un forEach direct sur les boutons
+  // présents au chargement) : les cartes de la page d'accueil sont
+  // insérées dynamiquement après la requête Supabase, donc leurs boutons
+  // .btn-buy n'existent pas encore à ce moment-là.
+  document.addEventListener('click', e => {
+    const btn = e.target.closest('button.btn-buy');
+    if (!btn) return;
+    e.preventDefault();
+    const slug = btn.dataset.slug;
+    const title = btn.closest('[data-title]')?.dataset.title || 'cet ebook';
+    if (!slug) {
+      showToast('Ce produit n’est pas encore disponible à l’achat.');
+      return;
+    }
+    openCheckoutModal(slug, title);
   });
 
   /* ---------- Newsletter form → Supabase ---------- */
@@ -411,7 +415,10 @@ document.addEventListener('DOMContentLoaded', () => {
             <p class="ebook-desc">${escapeHtml(p.short_description)}</p>
             <div class="ebook-footer">
               <div class="ebook-price">${priceBlock}</div>
-              <a href="ebooks/${escapeHtml(p.slug)}" class="btn btn-secondary btn-sm">Découvrir</a>
+              <div class="ebook-actions">
+                <button class="btn btn-primary btn-sm btn-buy" data-slug="${escapeHtml(p.slug)}">Acheter maintenant</button>
+                <a href="ebooks/${escapeHtml(p.slug)}" class="btn btn-secondary btn-sm">Découvrir</a>
+              </div>
             </div>
           </div>
         </article>`;
