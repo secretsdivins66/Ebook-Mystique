@@ -1451,7 +1451,7 @@ h1,h2,h3,h4 {
 /* ----- ≥769px : tablettes / petits ordinateurs portables ----- */
 @media (min-width: 769px) {
   .container, .nav-container { width: 90%; }
-  .section { padding: var(--space-2xl) 0; }
+  .section { padding: var(--space-xl) 0; }
 
   .ebook-footer { flex-wrap: nowrap; gap: 1rem; }
   .ebook-footer .btn { width: auto; margin-top: 0 !important; }

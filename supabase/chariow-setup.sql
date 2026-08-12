@@ -1,5 +1,5 @@
 -- ============================================================
--- Arcanes Mystiques — paiement Chariow + livraison des ebooks
+-- Livre Mystique — paiement Chariow + livraison des ebooks
 -- ============================================================
 -- À exécuter une seule fois dans : Supabase Dashboard → SQL Editor → New query
 -- (même procédure que setup.sql — voir SUPABASE-SETUP.md).

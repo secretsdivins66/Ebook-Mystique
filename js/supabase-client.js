@@ -1,5 +1,5 @@
 /* ============================================================
-   ARCANES MYSTIQUES — Client Supabase partagé
+   LIVRE MYSTIQUE — Client Supabase partagé
    Utilisé par le site public (js/main.js) et l'administration
    (admin/admin.js). La clé "anon" est publique par conception :
    la sécurité réelle est appliquée par les politiques Row Level

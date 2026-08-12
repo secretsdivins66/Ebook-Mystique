@@ -1,8 +1,8 @@
 {
-  "name": "arcanes-mystiques",
+  "name": "livre-mystique",
   "private": true,
   "version": "1.0.0",
-  "description": "Site + administration Arcanes Mystiques (fonctions serverless Vercel)",
+  "description": "Site + administration Livre Mystique (fonctions serverless Vercel)",
   "dependencies": {
     "@supabase/supabase-js": "^2.45.0",
     "resend": "^6.4.2"

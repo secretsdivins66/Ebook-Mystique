@@ -1,5 +1,5 @@
 /* ============================================================
-   ARCANES MYSTIQUES — JavaScript principal
+   LIVRE MYSTIQUE — JavaScript principal
    ============================================================ */
 
 /* ---------- Supabase Client ----------

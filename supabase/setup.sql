@@ -1,5 +1,5 @@
 -- ============================================================
--- Arcanes Mystiques — Configuration de la base de données
+-- Livre Mystique — Configuration de la base de données
 -- ============================================================
 -- À exécuter une seule fois dans : Supabase Dashboard → SQL Editor → New query
 -- Copie-colle tout ce fichier, puis clique sur "Run".

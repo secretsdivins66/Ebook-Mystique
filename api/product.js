@@ -49,7 +49,7 @@ function notFoundPage() {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex">
-  <title>Produit introuvable — Arcanes Mystiques</title>
+  <title>Produit introuvable — Livre Mystique</title>
   <link rel="stylesheet" href="/css/style.css">
   <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
 </head>
@@ -97,7 +97,7 @@ module.exports = async (req, res) => {
     .slice(0, 3);
 
   const url = `${SITE_URL}/ebooks/${product.slug}`;
-  const metaTitle = product.seo_meta_title || `${product.title} — Arcanes Mystiques`;
+  const metaTitle = product.seo_meta_title || `${product.title} — Livre Mystique`;
   const metaDesc = product.seo_meta_description || product.short_description || '';
   const keywords = product.seo_keywords || '';
 
@@ -163,7 +163,7 @@ ${related.map((p, i) => renderCard(p, (i % 4) + 1)).join('\n')}
   <meta property="og:type" content="product">
   <meta property="og:locale" content="fr_FR">
   <meta property="og:url" content="${url}">
-  <meta property="og:site_name" content="Arcanes Mystiques">
+  <meta property="og:site_name" content="Livre Mystique">
   ${product.thumbnail_url ? `<meta property="og:image" content="${escapeHtml(product.thumbnail_url)}">\n  ` : ''}<meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="${escapeHtml(metaTitle)}">
   <meta name="twitter:description" content="${escapeHtml(metaDesc)}">
@@ -197,7 +197,7 @@ ${related.map((p, i) => renderCard(p, (i % 4) + 1)).join('\n')}
 
   <nav class="navbar" role="navigation" aria-label="Navigation principale">
     <div class="nav-container">
-      <a href="/index.html" class="nav-logo" aria-label="Retour à l'accueil">Arcanes Mystiques</a>
+      <a href="/index.html" class="nav-logo" aria-label="Retour à l'accueil">Livre Mystique</a>
       <ul class="nav-links" role="list">
         <li><a href="/index.html">Accueil</a></li>
         <li><a href="/index.html#ebooks" class="active">Ebooks</a></li>
@@ -246,8 +246,8 @@ ${descriptionSection}${gallerySection}${relatedSection}
   <footer class="footer" role="contentinfo">
     <div class="container">
       <div class="footer-bottom" style="border:none;padding-top:0">
-        <a href="/index.html" class="nav-logo" style="font-size:1rem">Arcanes Mystiques</a>
-        <span style="color:var(--text-muted);font-size:0.82rem">© 2026 Arcanes Mystiques. Tous droits réservés.</span>
+        <a href="/index.html" class="nav-logo" style="font-size:1rem">Livre Mystique</a>
+        <span style="color:var(--text-muted);font-size:0.82rem">© 2026 Livre Mystique. Tous droits réservés.</span>
         <span style="font-size:0.82rem"><a href="#">Mentions légales</a> · <a href="#">Confidentialité</a></span>
       </div>
     </div>

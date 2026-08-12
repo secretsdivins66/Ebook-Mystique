@@ -1,5 +1,5 @@
 /* ============================================================
-   ARCANES MYSTIQUES — Administration : fonctions partagées
+   LIVRE MYSTIQUE — Administration : fonctions partagées
    Nécessite js/supabase-client.js (charge window.sb) avant ce fichier.
    ============================================================ */
 

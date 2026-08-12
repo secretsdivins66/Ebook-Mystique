@@ -1,5 +1,5 @@
 /* ============================================================
-   ARCANES MYSTIQUES — Formulaire produit (création / édition)
+   LIVRE MYSTIQUE — Formulaire produit (création / édition)
    ============================================================ */
 
 const params = new URLSearchParams(window.location.search);
@@ -50,7 +50,7 @@ const els = {
   await AdminAuth.require();
 
   if (isEditMode) {
-    document.getElementById('page-title').textContent = 'Modifier un produit — Administration Arcanes Mystiques';
+    document.getElementById('page-title').textContent = 'Modifier un produit — Administration Livre Mystique';
     document.getElementById('form-heading').textContent = 'Modifier le produit';
     await loadExistingProduct();
   } else {
