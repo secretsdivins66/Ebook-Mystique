@@ -422,15 +422,13 @@ h1,h2,h3,h4 {
 
 .hero-badge,
 .hero-title,
-.hero-text,
 .hero-btns {
   animation: heroRise 0.9s var(--ease) both;
 }
 
 .hero-badge { animation-delay: 0.05s; }
 .hero-title { animation-delay: 0.15s; }
-.hero-text  { animation-delay: 0.25s; }
-.hero-btns  { animation-delay: 0.35s; }
+.hero-btns  { animation-delay: 0.25s; }
 
 @keyframes heroRise {
   from { opacity: 0; transform: translateY(16px); }
@@ -453,16 +451,6 @@ h1,h2,h3,h4 {
   font-style: italic;
   font-weight: 400;
   color: var(--gold-light);
-}
-
-.hero-text {
-  font-size: 1rem;
-  font-weight: 300;
-  color: var(--text-secondary);
-  margin-bottom: 2rem;
-  max-width: 560px;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 .hero-btns {
@@ -1431,7 +1419,6 @@ h1,h2,h3,h4 {
   .hero-content { padding: 1.5rem 1rem; }
   .hero-btns { flex-direction: row; flex-wrap: wrap; }
   .hero-scroll { display: flex; }
-  .hero-text { padding: 0 0.5rem; }
 
   .footer-grid { grid-template-columns: 1fr; gap: 1.8rem; }
 
@@ -1514,7 +1501,7 @@ h1,h2,h3,h4 {
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .reveal, .scroll-arrow, .btn::before, .navbar,
-  .hero-badge, .hero-title, .hero-text, .hero-btns {
+  .hero-badge, .hero-title, .hero-btns {
     transition: none !important;
     animation: none !important;
   }
