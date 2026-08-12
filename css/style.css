@@ -391,7 +391,7 @@ h1,h2,h3,h4 {
 /* ---------- Hero ---------- */
 .hero {
   position: relative;
-  min-height: 88vh;
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -474,6 +474,14 @@ h1,h2,h3,h4 {
 }
 
 .hero-btns .btn { justify-content: center; }
+
+/* Titre du hero plus long depuis le changement d'accroche : sur les
+   viewports courts, l'indicateur "Défiler" (position absolute, ancré au
+   bas du hero) peut chevaucher les boutons si on le laisse affiché —
+   masqué tant qu'il n'y a pas assez de hauteur pour respirer. */
+@media (max-height: 850px) {
+  .hero-scroll { display: none !important; }
+}
 
 .hero-scroll {
   display: none;
