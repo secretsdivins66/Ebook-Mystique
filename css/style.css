@@ -435,6 +435,165 @@ h1,h2,h3,h4 {
   to   { opacity: 1; transform: translateY(0); }
 }
 
+/* ---------- Hero: pile de livres décorative ----------
+   Comble le vide au-dessus du badge "Boutique ésotérique" — illustration
+   CSS/SVG pure (pas de photo), palette reprise des variables du site
+   (--gold) plutôt que des couleurs codées en dur. */
+.hero-books-scene {
+  position: relative;
+  width: 100%;
+  max-width: 260px;
+  aspect-ratio: 16 / 10;
+  margin: 0 auto 1.1rem;
+  overflow: hidden;
+  border-radius: 4px;
+  background:
+    radial-gradient(ellipse 60% 50% at 50% 40%, rgba(198, 161, 95, 0.10), transparent 70%),
+    radial-gradient(ellipse 100% 80% at 50% 100%, var(--bg-tertiary) 0%, var(--bg-primary) 60%);
+}
+
+.hero-books-beam {
+  position: absolute;
+  top: -20%;
+  left: 10%;
+  width: 60%;
+  height: 140%;
+  background: linear-gradient(200deg, rgba(227, 196, 137, 0.16), transparent 55%);
+  filter: blur(2px);
+  pointer-events: none;
+}
+
+.hero-books-stack {
+  position: absolute;
+  left: 50%;
+  bottom: 6%;
+  transform: translateX(-50%);
+  width: 82%;
+  max-width: 300px;
+}
+
+.hero-book {
+  position: relative;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 3px 6px 6px 3px;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.hero-book::before {
+  content: '';
+  position: absolute;
+  right: -5px;
+  top: 2px;
+  bottom: 2px;
+  width: 6px;
+  border-radius: 0 3px 3px 0;
+  background: repeating-linear-gradient(to bottom, #ede3c8 0px, #ede3c8 2px, #d9cba3 2px, #d9cba3 3px);
+  box-shadow: 1px 0 3px rgba(0, 0, 0, 0.4);
+}
+
+.hero-book-spine {
+  position: absolute;
+  left: 9px;
+  top: 4px;
+  bottom: 4px;
+  width: 1px;
+  background: rgba(198, 161, 95, 0.35);
+}
+
+.hero-book-spine.second { left: 12px; }
+
+.hero-book-sigil { width: 14px; height: 14px; opacity: 0.85; }
+
+.hero-book-clasp {
+  position: absolute;
+  right: 11px;
+  width: 8px;
+  height: 12px;
+  border: 1.5px solid rgba(198, 161, 95, 0.7);
+  border-radius: 3px;
+  background: rgba(198, 161, 95, 0.12);
+}
+
+.hero-book-3 { background: linear-gradient(180deg, #2a2f4a, #141833); transform: rotate(-0.6deg); z-index: 5; }
+.hero-book-4 { background: linear-gradient(180deg, #3b2417, #1c1108); transform: rotate(1.1deg) translateY(-2px); width: 96%; margin-left: 4%; z-index: 6; }
+.hero-book-2 { background: linear-gradient(180deg, #5c1a1a, #3d1010); transform: rotate(0.8deg) translateY(-4px); width: 92%; margin-left: 8%; z-index: 7; }
+.hero-book-1 { background: linear-gradient(180deg, #4a2c1a, #241408); transform: rotate(-1.2deg) translateY(-6px); width: 88%; margin-left: 6%; z-index: 8; }
+.hero-book-5 { background: linear-gradient(180deg, #241408, #120a04); transform: rotate(-0.3deg) translateY(-8px); width: 80%; margin-left: 10%; height: 22px; z-index: 9; }
+
+.hero-books-top {
+  position: absolute;
+  bottom: calc(6% + 60px);
+  left: 50%;
+  transform: translateX(-50%) rotate(-2deg);
+  width: 60%;
+  max-width: 190px;
+  z-index: 10;
+}
+
+.hero-books-top-cover {
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 3px 10px 10px 3px;
+  background: linear-gradient(160deg, #4a2c1a, #241408);
+  box-shadow: 0 8px 14px rgba(0, 0, 0, 0.6);
+}
+
+.hero-books-seal { width: 19px; height: 19px; flex-shrink: 0; opacity: 0.9; }
+
+.hero-books-top-title {
+  margin-left: 6px;
+  font-family: var(--font-display);
+  letter-spacing: 0.06em;
+  font-size: 0.5rem;
+  color: var(--text-primary);
+  opacity: 0.85;
+  white-space: nowrap;
+}
+
+.hero-books-pages {
+  position: absolute;
+  left: 8%;
+  right: -4%;
+  bottom: -8px;
+  height: 12px;
+  background: linear-gradient(180deg, #ede3c8, #c9b98d);
+  clip-path: polygon(0% 0%, 100% 20%, 96% 100%, 4% 100%);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+}
+
+.hero-books-glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(2px 2px at 30% 60%, rgba(227, 196, 137, 0.6), transparent),
+    radial-gradient(1.5px 1.5px at 65% 45%, rgba(227, 196, 137, 0.5), transparent),
+    radial-gradient(2px 2px at 50% 75%, rgba(227, 196, 137, 0.4), transparent),
+    radial-gradient(1.5px 1.5px at 42% 35%, rgba(227, 196, 137, 0.5), transparent);
+  animation: heroBooksDrift 8s ease-in-out infinite alternate;
+}
+
+@keyframes heroBooksDrift {
+  from { transform: translateY(0); opacity: 0.6; }
+  to   { transform: translateY(-6px); opacity: 1; }
+}
+
+.hero-books-vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse 90% 90% at 50% 55%, transparent 40%, rgba(0, 0, 0, 0.55) 100%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-books-glow { animation: none; }
+}
+
 .hero-badge {
   display: inline-flex;
   margin-bottom: 1.6rem;
@@ -463,11 +622,12 @@ h1,h2,h3,h4 {
 
 .hero-btns .btn { justify-content: center; }
 
-/* Titre du hero plus long depuis le changement d'accroche : sur les
-   viewports courts, l'indicateur "Défiler" (position absolute, ancré au
-   bas du hero) peut chevaucher les boutons si on le laisse affiché —
-   masqué tant qu'il n'y a pas assez de hauteur pour respirer. */
-@media (max-height: 850px) {
+/* Titre du hero plus long depuis le changement d'accroche (+ pile de
+   livres décorative ajoutée au-dessus) : sur les viewports courts,
+   l'indicateur "Défiler" (position absolute, ancré au bas du hero) peut
+   chevaucher les boutons si on le laisse affiché — masqué tant qu'il
+   n'y a pas assez de hauteur pour respirer. */
+@media (max-height: 980px) {
   .hero-scroll { display: none !important; }
 }
 
