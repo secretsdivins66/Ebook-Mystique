@@ -72,7 +72,8 @@ module.exports = async (req, res) => {
       .maybeSingle();
 
     if (productError || !product) {
-      res.status(400).json({ error: 'unknown_product' });
+      console.error('chariow-checkout: product lookup failed', { slug, productError });
+      res.status(400).json({ error: 'unknown_product', debug: productError ? { code: productError.code, message: productError.message } : 'no_row' });
       return;
     }
     if (!product.chariow_product_id) {
