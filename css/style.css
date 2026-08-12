@@ -1157,7 +1157,14 @@ h1,h2,h3,h4 {
 .form-group textarea { resize: vertical; min-height: 130px; }
 
 .phone-input-group { display: flex; gap: 0.7rem; }
-#co-country { flex: 0 0 auto; width: 5.4rem; padding-right: 0 !important; }
+#co-country {
+  flex: 0 0 auto;
+  width: 8rem;
+  max-width: 40%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 #co-phone { flex: 1 1 auto; min-width: 0; }
 
 /* ---------- Product Detail Page ---------- */
