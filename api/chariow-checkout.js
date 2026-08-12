@@ -157,7 +157,7 @@ module.exports = async (req, res) => {
     // un) : `step` présent dans `data` suffit.
     if (!chariowResponseJson || !step) {
       console.error('chariow-checkout: unexpected Chariow response', { internalReference, response: chariowResponseJson });
-      res.status(502).json({ error: 'chariow_checkout_failed', reference: internalReference });
+      res.status(502).json({ error: 'chariow_checkout_failed', reference: internalReference, debug: { resolvedCountry: chariowRequestBody.phone.country_code, chariowResponseJson } });
       return;
     }
 
