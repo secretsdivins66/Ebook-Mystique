@@ -197,14 +197,19 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* ---------- Buy button → paiement Chariow ----------
-     Sélecteur pays par drapeau, choisi par l'utilisateur lui-même — une
-     détection IP seule s'est montrée peu fiable (cf. commit précédent :
-     géolocalisation en Guinée + numéro ivoirien rejeté par Chariow).
-     Liste complète ISO 3166-1 (noms via Intl.DisplayNames, triés en
-     français) — "CI" présélectionné par défaut (zone principale de la
-     boutique), l'utilisateur peut choisir n'importe quel pays de
-     résidence. L'indicatif ISO alpha-2 choisi part vers
-     api/chariow-checkout.js. */
+     Sélecteur pays par drapeau, PRÉSÉLECTIONNÉ automatiquement via la
+     géolocalisation IP (api/geo.js, même source que le filet de secours
+     d'api/chariow-checkout.js) — l'utilisateur reste libre de le
+     corriger, une détection IP seule s'étant montrée peu fiable (cf.
+     commit précédent : géolocalisation en Guinée + numéro ivoirien
+     rejeté par Chariow). "CI" en dernier recours si la détection échoue
+     ou renvoie un pays absent de la liste. Liste complète ISO 3166-1
+     (noms via Intl.DisplayNames, triés en français). */
+  let detectedCountryCode = null;
+  fetch('/api/geo').then(r => r.json()).then(d => {
+    if (d && typeof d.country === 'string') detectedCountryCode = d.country;
+  }).catch(() => {});
+
   const COUNTRY_OPTIONS = [
     { code: 'AF', flag: '🇦🇫', name: "Afghanistan" },
     { code: 'ZA', flag: '🇿🇦', name: "Afrique du Sud" },
@@ -456,8 +461,9 @@ document.addEventListener('DOMContentLoaded', () => {
   function openCheckoutModal(slug, title) {
     const overlay = document.createElement('div');
     overlay.className = 'checkout-modal-overlay';
+    const preselected = COUNTRY_OPTIONS.some(c => c.code === detectedCountryCode) ? detectedCountryCode : 'CI';
     const countryOptionsHtml = COUNTRY_OPTIONS
-      .map(c => `<option value="${c.code}"${c.code === 'CI' ? ' selected' : ''}>${c.flag} ${c.name}</option>`)
+      .map(c => `<option value="${c.code}"${c.code === preselected ? ' selected' : ''}>${c.flag} ${c.name}</option>`)
       .join('');
     overlay.innerHTML = `
       <div class="checkout-modal" role="dialog" aria-modal="true" aria-labelledby="checkout-modal-title">
