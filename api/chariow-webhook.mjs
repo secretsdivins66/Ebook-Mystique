@@ -19,6 +19,14 @@
 // - header x-pulse-event : seul "successful.sale" est traité.
 import { Resend } from 'resend';
 
+// Sans ceci, Vercel traite ce fichier comme une Node.js Serverless Function
+// classique (req, res) par défaut — un handler qui prend une Request et
+// retourne une Response (format Web Standard) ne correspond pas à cette
+// signature et la fonction ne répond jamais (timeout silencieux, testé en
+// direct le 2026-08-12 : TLS OK, 0 octet reçu après 15s). Forcer le runtime
+// Edge fait que Vercel invoque bien ce handler au format Request/Response.
+export const config = { runtime: 'edge' };
+
 const SUPABASE_URL = 'https://cawyrfbmwpcoanftybew.supabase.co';
 // Domaine réel du site, confirmé en direct le 2026-08-12 : le
 // "arcanes-mystiques.fr" utilisé jusqu'ici dans ce projet (y compris dans
