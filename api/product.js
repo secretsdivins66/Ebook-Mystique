@@ -197,7 +197,7 @@ ${related.map((p, i) => renderCard(p, (i % 4) + 1)).join('\n')}
 
   <nav class="navbar" role="navigation" aria-label="Navigation principale">
     <div class="nav-container">
-      <a href="/index.html" class="nav-logo" aria-label="Retour à l'accueil"></a>
+      <a href="/index.html" class="nav-logo" aria-label="Retour à l'accueil">Livre Mystique</a>
       <ul class="nav-links" role="list">
         <li><a href="/index.html">Accueil</a></li>
         <li><a href="/index.html#ebooks" class="active">Ebooks</a></li>
